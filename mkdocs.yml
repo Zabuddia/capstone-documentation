@@ -1,0 +1,58 @@
+site_name: Capstone Documentation
+site_description: Capstone internal technical documentation
+
+theme:
+  name: material
+  language: en
+  icon:
+    logo: material/book-open-page-variant
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: lime
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font:
+    text: IBM Plex Sans
+    code: JetBrains Mono
+  features:
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - header.autohide
+
+plugins:
+  - search
+
+markdown_extensions:
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Diagram: diagram.md
+  - WireGuard: wireguard.md
+  - Azure API: azure-api.md
+  - Visual Studio Code (Cline): visual-studio-code-cline.md
+  - Web Browser: web-browser.md
+  - Ubuntu Virtual Machine: ubuntu-virtual-machine.md
+  - Docker: docker.md
+  - LiteLLM: litellm.md
+  - OpenWebUI: openwebui.md
+  - LibreChat: librechat.md
+  - RAG Website: rag-website.md
+  - MCP Server: mcp-server.md
+  - Azure AI Search: azure-ai-search.md
+  - Azure AI Foundry: azure-ai-foundry.md
