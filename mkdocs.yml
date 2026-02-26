@@ -42,7 +42,6 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Diagram: diagram.md
   - WireGuard: wireguard.md
   - Azure API: azure-api.md
   - Visual Studio Code (Cline): visual-studio-code-cline.md

@@ -1,16 +1,15 @@
-## Docker
+# Docker
 
-**Purpose:**
+## Purpose
 Run apps in isolated containers so they are easy to install, start/stop,
 upgrade, and survive reboots.
 
----
 
-### Install Docker Engine + Docker Compose
+## Install Docker Engine + Docker Compose
 
 This installs Docker from Docker's official repository.
 
-``` bash
+```bash
 sudo apt update
 sudo apt install -y ca-certificates curl gnupg
 
@@ -26,81 +25,67 @@ sudo apt update
 
 sudo apt install -y docker-ce docker-ce-cli containerd.io   docker-buildx-plugin docker-compose-plugin
 ```
-
 Enable Docker at boot:
 
-``` bash
+```bash
 sudo systemctl enable --now docker
 ```
-
 Allow your user to run Docker without `sudo`:
 
-``` bash
+```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
-
 Verify installation:
 
-``` bash
+```bash
 docker --version
 docker compose version
 ```
 
----
-
-### Common Commands
+## Common Commands
 
 List running containers:
 
-``` bash
+```bash
 docker ps
 ```
-
 View logs:
 
-``` bash
+```bash
 docker logs -n 200 <container>
 ```
-
 Restart container:
 
-``` bash
+```bash
 docker restart <container>
 ```
-
 Stop & remove container:
 
-``` bash
+```bash
 docker rm -f <container>
 ```
-
 Pull image:
 
-``` bash
+```bash
 docker pull <image:tag>
 ```
 
----
+## Updating a Container (Manual `docker run`)
 
-### Updating a Container (Manual `docker run`)
-
-``` bash
+```bash
 docker pull <image:tag>
 docker rm -f <container>
 # re-run your docker run command
 ```
-
 If you are using volumes, your data is preserved.
 
----
 
-### Updating a Docker Compose App
+## Updating a Docker Compose App
 
-``` bash
+```bash
 docker compose pull
 docker compose up -d
 ```
-
 This recreates containers with the latest images while keeping
 persistent volumes intact.

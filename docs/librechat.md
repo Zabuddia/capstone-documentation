@@ -1,31 +1,29 @@
-## LibreChat
+# LibreChat
+
+## Purpose
 
 This guide installs **LibreChat** on an Ubuntu virtual machine, wired to:
 
--   **LiteLLM** → `http://10.55.55.1:4000/v1`
--   **MCP Server** → `http://10.55.55.1:8000/mcp`
--   **LibreChat UI** → `http://10.55.55.1:3080`
+- **LiteLLM** → `http://10.55.55.1:4000/v1`
+- **MCP Server** → `http://10.55.55.1:8000/mcp`
+- **LibreChat UI** → `http://10.55.55.1:3080`
 
----
 
-### 1) Create Project Folder + Download Base Compose File
+## 1) Create Project Folder + Download Base Compose File
 
-``` bash
+```bash
 mkdir -p ~/librechat && cd ~/librechat
 curl -fsSL https://raw.githubusercontent.com/danny-avila/LibreChat/main/docker-compose.yml -o docker-compose.yml
 ```
 
----
+## 2) Create `.env`
 
-### 2) Create `.env`
-
-``` bash
+```bash
 nano .env
 ```
-
 Paste and edit secrets:
 
-``` env
+```env
 HOST=0.0.0.0
 PORT=3080
 
@@ -46,17 +44,14 @@ ALLOW_REGISTRATION=true
 ALLOW_EMAIL_LOGIN=true
 ```
 
----
+## 3) Create `docker-compose.override.yml`
 
-### 3) Create `docker-compose.override.yml`
-
-``` bash
+```bash
 nano docker-compose.override.yml
 ```
-
 Paste:
 
-``` yaml
+```yaml
 services:
   api:
     environment:
@@ -65,17 +60,14 @@ services:
       - ./librechat.yaml:/app/librechat.yaml:ro
 ```
 
----
+## 4) Create `librechat.yaml`
 
-### 4) Create `librechat.yaml`
-
-``` bash
+```bash
 nano librechat.yaml
 ```
-
 Paste:
 
-``` yaml
+```yaml
 version: 1.3.4
 
 mcpSettings:
@@ -99,31 +91,25 @@ endpoints:
       modelDisplayLabel: "LiteLLM"
 ```
 
----
-
-### 8) Start LibreChat
+## 8) Start LibreChat
 
 From inside `~/librechat`:
 
-``` bash
+```bash
 docker compose up -d
 ```
-
 Check containers:
 
-``` bash
+```bash
 docker compose ps
 ```
-
 Check logs:
 
-``` bash
+```bash
 docker logs -n 200 LibreChat
 ```
 
----
-
-### 9) Access LibreChat
+## 9) Access LibreChat
 
 Open in your browser:
 
@@ -131,33 +117,26 @@ http://10.55.55.1:3080
 
 If registration is enabled, create an account and log in.
 
----
 
-### 10) Restart After Config Changes
+## 10) Restart After Config Changes
 
-``` bash
+```bash
 docker compose restart api
 ```
 
----
+## 11) Update to Latest Version
 
-### 11) Update to Latest Version
-
-``` bash
+```bash
 docker compose pull
 docker compose up -d
 ```
 
----
+## 12) Completely Reset (Wipe Data)
 
-### 12) Completely Reset (Wipe Data)
-
-``` bash
+```bash
 docker compose down
 rm -rf ./data-node ./meili_data_v1.35.1 ./uploads ./logs
 docker compose up -d
 ```
-
----
 
 LibreChat is now running cleanly with LiteLLM and your MCP server.

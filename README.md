@@ -1,10 +1,30 @@
 # Capstone Documentation
 
+## Add a New Documentation Page
+
+1. Create a new Markdown file in `docs/`:
+
+2. Add your content to that file (start with a heading, for example `# New Page`).
+
+3. Add the page to `nav` in `mkdocs.yml`:
+
+```yaml
+nav:
+  - Home: index.md
+  - New Page: new-page.md
+```
+
+4. Run locally and verify:
+
+```bash
+mkdocs serve
+```
+
 Basic instructions for running this docs site with MkDocs.
 
 ## Prerequisites
 
-- Python 3.10+ (or similar recent version)
+- Python
 - `pip`
 
 ## Setup

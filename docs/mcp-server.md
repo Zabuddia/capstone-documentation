@@ -1,6 +1,6 @@
-## MCP Server
+# MCP Server
 
-### Purpose
+## Purpose
 
 Expose Azure AI Search as **MCP tools** so clients like **Cline**,
 **OpenWebUI**, or other agents can query your Azure Search indexes
@@ -8,28 +8,23 @@ through a consistent tool interface.
 
 This server exposes:
 
--   **Native MCP Streamable HTTP (FastMCP)**
-    -   Base URL: `http://10.55.55.1:8000/mcp`
--   **MCPO OpenAPI Proxy (for Open WebUI)**
-    -   Base URL: `http://10.55.55.1:8001`
--   **MCPO Docs**
-    -   Base URL: `http://10.55.55.1:8001/docs`
+- **Native MCP Streamable HTTP (FastMCP):** `http://10.55.55.1:8000/mcp`
+- **MCPO OpenAPI Proxy (for Open WebUI):** `http://10.55.55.1:8001`
+- **MCPO Docs:** `http://10.55.55.1:8001/docs`
 
 The MCP server remains clean and minimal. MCPO runs as a separate
 service that bridges MCP → OpenAPI.
 
----
 
-### Network / URLs
+## Network / URLs
 
--   **Bind IP (WireGuard):** `10.55.55.1`
--   **MCP (Streamable HTTP):** `http://10.55.55.1:8000/mcp`
--   **MCPO (OpenAPI Proxy):** `http://10.55.55.1:8001`
--   **MCPO Docs:** `http://10.55.55.1:8001/docs`
+- **Bind IP (WireGuard):** `10.55.55.1`
+- **MCP (Streamable HTTP):** `http://10.55.55.1:8000/mcp`
+- **MCPO (OpenAPI Proxy):** `http://10.55.55.1:8001`
+- **MCPO Docs:** `http://10.55.55.1:8001/docs`
 
----
 
-### What tools it exposes
+## What tools it exposes
 
 At startup, the MCP server calls Azure AI Search:
 
@@ -39,28 +34,27 @@ For each index found, it dynamically registers a tool:
 
     search_<index_name_sanitized>(query: str, top_k: int=...) -> str
 
-Each tool: - Searches its corresponding Azure AI Search index - Returns
-formatted text results - Defaults to `AZURE_SEARCH_DEFAULT_TOP_K`
-results
+Each tool:
 
----
+- Searches its corresponding Azure AI Search index.
+- Returns formatted text results.
+- Defaults to `AZURE_SEARCH_DEFAULT_TOP_K` results.
 
-### Files
 
-#### `requirements.txt`
+## Files
 
-``` txt
+### `requirements.txt`
+
+```txt
 fastmcp
 httpx
 uvicorn
 mcpo
 ```
 
----
+### `config.py`
 
-#### `config.py`
-
-``` py
+```py
 # ---------- Azure AI Search ----------
 AZURE_SEARCH_ENDPOINT = "https://chris-rag-testing.search.azure.us"
 AZURE_SEARCH_API_VERSION = "2023-11-01"
@@ -77,11 +71,9 @@ ALLOWED_HOSTS = ["localhost:*", "127.0.0.1:*", f"{BIND_HOST}:*"]
 ALLOWED_ORIGINS = ["http://localhost:*", "http://127.0.0.1:*", f"http://{BIND_HOST}:*"]
 ```
 
----
+### `server.py`
 
-#### `server.py`
-
-``` py
+```py
 import asyncio
 import logging
 import os
@@ -226,15 +218,13 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
----
+## systemd Units
 
-### systemd Units
-
-#### MCP Service
+### MCP Service
 
 `/etc/systemd/system/mcp-server.service`
 
-``` ini
+```ini
 [Unit]
 Description=azure-search-mcp
 After=network-online.target
@@ -252,13 +242,11 @@ RestartSec=2
 WantedBy=multi-user.target
 ```
 
----
-
-#### MCPO Service
+### MCPO Service
 
 `/etc/systemd/system/mcpo.service`
 
-``` ini
+```ini
 [Unit]
 Description=mcpo (MCP-to-OpenAPI proxy)
 After=network-online.target
@@ -282,44 +270,40 @@ RestartSec=2
 WantedBy=multi-user.target
 ```
 
----
+## Step-by-step: install & run on Ubuntu VM
 
-### Step-by-step: install & run on Ubuntu VM
+### 1) Create project folder
 
-#### 1) Create project folder
-
-``` bash
+```bash
 mkdir -p ~/mcp-server
 cd ~/mcp-server
 ```
 Put the `config.py` and `server.py` in this folder.
 
-#### 2) Install OS packages
+### 2) Install OS packages
 
-``` bash
+```bash
 sudo apt update
 sudo apt install -y python3 python3-venv python3-pip
 ```
 
-#### 3) Create virtual environment
+### 3) Create virtual environment
 
-``` bash
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-#### 4) Install dependencies
+### 4) Install dependencies
 
-``` bash
+```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
----
+## Production run (systemd)
 
-### Production run (systemd)
-
-``` bash
+```bash
 sudo nano /etc/systemd/system/mcp-server.service
 # Paste mcp-server.service
 
@@ -330,4 +314,3 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now mcp-server
 sudo systemctl enable --now mcpo
 ```
----

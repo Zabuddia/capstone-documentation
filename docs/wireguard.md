@@ -1,10 +1,10 @@
-## WireGuard
+# WireGuard
 
-### Goal
+## Purpose
 
 Configure the Azure Ubuntu VM to act as a WireGuard VPN gateway so approved clients can securely access services on the VM over a private VPN subnet.
 
-### Network Information
+## Network Information
 
 - WireGuard Subnet: `10.55.55.0/24`
 - Server VPN IP: `10.55.55.1`
@@ -16,11 +16,10 @@ Traffic path:
 - The client sends encrypted UDP packets to the Azure VM public IP on port `51820`.
 - The Azure VM decrypts packets and routes the decrypted traffic via `wg0` (VPN IP `10.55.55.1`).
 
----
 
-### Server Setup (Ubuntu VM)
+## Server Setup (Ubuntu VM)
 
-#### 1) Generate server keys
+### 1) Generate server keys
 
 Run on the Ubuntu VM:
 
@@ -28,21 +27,19 @@ Run on the Ubuntu VM:
 sudo umask 077
 sudo wg genkey | tee /etc/wireguard/server_private.key | wg pubkey | tee /etc/wireguard/server_public.key
 ```
-
 View the server public key (needed for clients):
 
 ```bash
 sudo cat /etc/wireguard/server_public.key
 ```
 
-#### 2) Create server config: `/etc/wireguard/wg0.conf`
+### 2) Create server config: `/etc/wireguard/wg0.conf`
 
 Create/edit the file:
 
 ```bash
 sudo nano /etc/wireguard/wg0.conf
 ```
-
 Paste and fill in values:
 
 ```ini
@@ -61,39 +58,36 @@ PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACC
 PublicKey = <CLIENT_PUBLIC_KEY>
 AllowedIPs = 10.55.55.2/32
 ```
-
 Notes:
 
 - `AllowedIPs` on the server binds a client public key to a single VPN IP (`/32`).
 - Add one `[Peer]` block per client with a unique VPN IP.
 - If you do not want the VM to NAT/route traffic for clients, you can remove `PostUp`/`PostDown`.
 
-#### 3) Enable IP forwarding (server)
+### 3) Enable IP forwarding (server)
 
 ```bash
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-#### 4) Azure NSG inbound rules
+### 4) Azure NSG inbound rules
 
 Ensure the VM’s Network Security Group allows:
 
 - TCP `22` (SSH) from your allowed source IP(s)
 - UDP `51820` (WireGuard) from your allowed source IP(s)
 
-#### 5) Start the server
+### 5) Start the server
 
 ```bash
 sudo wg-quick up wg0
 sudo wg show
 ```
 
----
+## Client Setup (Linux)
 
-### Client Setup (Linux)
-
-#### 1) Install WireGuard
+### 1) Install WireGuard
 
 Ubuntu/Debian:
 
@@ -102,21 +96,19 @@ sudo apt update
 sudo apt install wireguard
 ```
 
-#### 2) Generate client keys
+### 2) Generate client keys
 
 ```bash
 umask 077
 wg genkey | tee client_private.key | wg pubkey > client_public.key
 ```
-
 Send `client_public.key` to the server administrator so it can be added as a `[Peer]` in `/etc/wireguard/wg0.conf`.
 
-#### 3) Create client config: `/etc/wireguard/wg0.conf`
+### 3) Create client config: `/etc/wireguard/wg0.conf`
 
 ```bash
 sudo nano /etc/wireguard/wg0.conf
 ```
-
 Paste and fill in values:
 
 ```ini
@@ -131,13 +123,12 @@ Endpoint = <AZURE_PUBLIC_IP>:51820
 AllowedIPs = 10.55.55.0/24
 PersistentKeepalive = 25
 ```
-
 Notes:
 
 - Replace `10.55.55.2` with your assigned client VPN IP.
 - `AllowedIPs = 10.55.55.0/24` is split-tunnel (only the VPN subnet routes through WireGuard).
 
-#### 4) Start and verify connection
+### 4) Start and verify connection
 
 ```bash
 sudo wg-quick up wg0
@@ -145,15 +136,13 @@ sudo wg show
 ping 10.55.55.1
 ```
 
----
+## Client Setup (Windows)
 
-### Client Setup (Windows)
-
-#### 1) Install WireGuard
+### 1) Install WireGuard
 
 Install WireGuard for Windows from the official installer.
 
-#### 2) Create a tunnel and generate keys
+### 2) Create a tunnel and generate keys
 
 In the WireGuard app:
 
@@ -163,7 +152,7 @@ In the WireGuard app:
 
 Copy the client public key and send it to the server administrator so it can be added as a `[Peer]` in `/etc/wireguard/wg0.conf`.
 
-#### 3) Configure the tunnel
+### 3) Configure the tunnel
 
 Use a configuration like the following (fill in values):
 
@@ -179,7 +168,6 @@ Endpoint = <AZURE_PUBLIC_IP>:51820
 AllowedIPs = 10.55.55.0/24
 PersistentKeepalive = 25
 ```
-
 Notes:
 
 - Replace `10.55.55.2` with your assigned client VPN IP.
@@ -187,22 +175,19 @@ Notes:
 
 Activate the tunnel in the WireGuard app.
 
-#### 4) Verify connection
+### 4) Verify connection
 
 ```bash
 ping 10.55.55.1
 ```
 
----
-
-### Optional: Full-tunnel mode (route all traffic through Azure VM)
+## Optional: Full-tunnel mode (route all traffic through Azure VM)
 
 Client change:
 
 ```ini
 AllowedIPs = 0.0.0.0/0
 ```
-
 Server requirements:
 
 - IP forwarding enabled

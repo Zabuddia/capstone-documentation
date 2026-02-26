@@ -1,6 +1,6 @@
-## LiteLLM
+# LiteLLM
 
-**Purpose:**
+## Purpose
 Run an **OpenAI-compatible** API proxy on the Ubuntu VM so tools like **Cline** and **OpenWebUI** can call Azure Gov **GPT-4o** through a single endpoint.
 
 **URL:** `http://10.55.55.1:4000`
@@ -9,9 +9,8 @@ Run an **OpenAI-compatible** API proxy on the Ubuntu VM so tools like **Cline** 
 
 **Config location:** `~/lite-llm/config.yaml` (mounted into the container)
 
----
 
-### 1) Create `config.yaml`
+## 1) Create `config.yaml`
 
 On the Ubuntu VM:
 
@@ -20,7 +19,6 @@ mkdir -p ~/lite-llm
 cd ~/lite-llm
 nano config.yaml
 ```
-
 Paste this config (two deployments exposed as one `gpt-4o`):
 
 ```yaml
@@ -52,24 +50,20 @@ litellm_settings:
 general_settings:
   master_key: os.environ/LITELLM_KEY
 ```
-
 Notes:
 
 - `model_name: gpt-4o` appears twice → LiteLLM will serve **one** model name and route across the two Azure deployments.
 
 - `api_base`, `api_key`, and `master_key` come from environment variables you pass in via `docker run`.
 
----
 
-### 2) Create a LiteLLM API key
+## 2) Create a LiteLLM API key
 
 ```bash
 echo "sk-$(openssl rand -hex 24)"
 ```
 
----
-
-### 3) Run LiteLLM in Docker
+## 3) Run LiteLLM in Docker
 
 ```bash
 cd ~/lite-llm
@@ -87,9 +81,7 @@ docker run -d \
   --detailed_debug
 ```
 
----
-
-### 4) Verify it’s up
+## 4) Verify it’s up
 
 List models (should show `gpt-4o`):
 
@@ -98,23 +90,19 @@ curl -s \
   -H "Authorization: Bearer sk-PASTE_YOUR_LITELLM_KEY_HERE" \
   http://10.55.55.1:4000/v1/models
 ```
-
 Check logs if needed:
 
 ```bash
 docker logs -n 200 litellm
 ```
 
----
-
-### 5) Updating config
+## 5) Updating config
 
 After editing `~/lite-llm/config.yaml`:
 
 ```bash
 docker restart litellm
 ```
-
 If you change any `-e ...` environment variables, recreate the container:
 
 ```bash
@@ -122,9 +110,7 @@ docker rm -f litellm
 # rerun the docker run command
 ```
 
----
-
-### 6) Using it from clients (Cline / OpenWebUI)
+## 6) Using it from clients (Cline / OpenWebUI)
 
 - **Base URL:** `http://10.55.55.1:4000`
 - **API key:** `LITELLM_KEY` (the `sk-...` value)
