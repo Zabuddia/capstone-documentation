@@ -249,21 +249,24 @@ WantedBy=multi-user.target
 ```ini
 [Unit]
 Description=mcpo (MCP-to-OpenAPI proxy)
-After=network-online.target
-Wants=network-online.target
+Wants=network-online.target mcp-server.service
+After=network-online.target mcp-server.service
 
 [Service]
 Type=simple
 User=byu_azure
 WorkingDirectory=/home/byu_azure/mcp-server
 
+# Wait until MCP server is reachable (kills the startup race)
+ExecStartPre=/usr/bin/bash -lc 'for i in {1..60}; do curl -fsS --max-time 1 http://10.55.55.1:8000/mcp >/dev/null && exit 0; sleep 1; done; echo "MCP not reachable"; exit 1'
+
 ExecStart=/home/byu_azure/mcp-server/.venv/bin/mcpo \
   --host 10.55.55.1 \
   --port 8001 \
-  --server-type streamable-http \
+  --server-type "streamable-http" \
   -- http://10.55.55.1:8000/mcp
 
-Restart=on-failure
+Restart=always
 RestartSec=2
 
 [Install]
