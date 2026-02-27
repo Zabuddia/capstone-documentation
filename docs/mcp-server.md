@@ -258,7 +258,7 @@ User=byu_azure
 WorkingDirectory=/home/byu_azure/mcp-server
 
 # Wait until MCP server is reachable (kills the startup race)
-ExecStartPre=/usr/bin/bash -lc 'for i in {1..60}; do curl -fsS --max-time 1 http://10.55.55.1:8000/mcp >/dev/null && exit 0; sleep 1; done; echo "MCP not reachable"; exit 1'
+ExecStartPre=/usr/bin/bash -lc 'for i in {1..60}; do code="$(curl -s -o /dev/null -w "%{http_code}" --max-time 1 http://10.55.55.1:8000/mcp || true)"; if [[ "$code" == "200" || "$code" == "202" || "$code" == "406" ]]; then exit 0; fi; sleep 1; done; echo "MCP not reachable (last HTTP $code)"; exit 1'
 
 ExecStart=/home/byu_azure/mcp-server/.venv/bin/mcpo \
   --host 10.55.55.1 \
