@@ -46,9 +46,6 @@ model_list:
 litellm_settings:
   drop_params: true
   rate_limiter: local
-
-general_settings:
-  master_key: os.environ/LITELLM_KEY
 ```
 Notes:
 
@@ -56,14 +53,7 @@ Notes:
 
 - `api_base`, `api_key`, and `master_key` come from environment variables you pass in via `docker run`.
 
-
-## 2) Create a LiteLLM API key
-
-```bash
-echo "sk-$(openssl rand -hex 24)"
-```
-
-## 3) Run LiteLLM in Docker
+## 2) Run LiteLLM in Docker
 
 ```bash
 cd ~/lite-llm
@@ -73,22 +63,19 @@ docker run -d \
   --restart unless-stopped \
   -v "$(pwd)/config.yaml:/app/config.yaml:ro" \
   -e AZURE_API_BASE="https://aifoundry0436939217.openai.azure.us" \
-  -e AZURE_LLM_API_KEY_VIRGINIA="PASTE_YOUR_AZURE_LLM_API_KEY_HERE" \
-  -e LITELLM_KEY="sk-PASTE_YOUR_LITELLM_KEY_HERE" \
+  -e AZURE_LLM_API_KEY="PASTE_YOUR_AZURE_LLM_API_KEY_HERE" \
   -p 10.55.55.1:4000:4000 \
   docker.litellm.ai/berriai/litellm:main-stable \
   --config /app/config.yaml \
   --detailed_debug
 ```
 
-## 4) Verify it’s up
+## 3) Verify it’s up
 
 List models (should show `gpt-4o`):
 
 ```bash
-curl -s \
-  -H "Authorization: Bearer sk-PASTE_YOUR_LITELLM_KEY_HERE" \
-  http://10.55.55.1:4000/v1/models
+curl -s http://10.55.55.1:4000/v1/models
 ```
 Check logs if needed:
 
@@ -96,7 +83,7 @@ Check logs if needed:
 docker logs -n 200 litellm
 ```
 
-## 5) Updating config
+## 4) Updating config
 
 After editing `~/lite-llm/config.yaml`:
 
@@ -110,10 +97,10 @@ docker rm -f litellm
 # rerun the docker run command
 ```
 
-## 6) Using it from clients (Cline / OpenWebUI)
+## 5) Using it from clients (Cline / OpenWebUI)
 
 - **Base URL:** `http://10.55.55.1:4000`
-- **API key:** `LITELLM_KEY` (the `sk-...` value)
+- **API key:** `Leave blank`
 - **Model:** `gpt-4o`
 
 (You must be connected to WireGuard to reach `10.55.55.1`.)

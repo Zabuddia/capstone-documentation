@@ -21,7 +21,7 @@ docker run -d \
   -p 10.55.55.1:3000:8080 \
   -e WEBUI_AUTH=True \
   -e OPENAI_API_BASE_URL="http://10.55.55.1:4000/v1" \
-  -e OPENAI_API_KEY="sk-PASTE_YOUR_LITELLM_KEY_HERE" \
+  -e OPENAI_API_KEY="dummy" \
   -v open-webui:/app/backend/data \
   ghcr.io/open-webui/open-webui:main
 ```
@@ -36,9 +36,6 @@ docker run -d \
 
 - `OPENAI_API_BASE_URL="http://10.55.55.1:4000/v1"`
   Points OpenWebUI at LiteLLM (so the model list comes from LiteLLM’s `/v1/models`).
-
-- `OPENAI_API_KEY="sk-..."`
-  The Bearer token OpenWebUI uses to authenticate to LiteLLM (your `LITELLM_KEY`).
 
 - `-v open-webui:/app/backend/data`
   Persists users, chats, and settings across container restarts/recreates.
