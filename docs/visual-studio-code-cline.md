@@ -28,7 +28,7 @@ Open Cline settings and configure the following:
   `http://10.55.55.1:4000`  
   (Replace with your LiteLLM server IP if different.)
 - **OpenAI Compatible API Key:**
-  Use the API key configured in your LiteLLM server.
+  None.
 - **Model ID:**
   Enter the model name exactly as defined in your LiteLLM configuration file.  
   (Example: `gpt-4o`, or whatever alias you configured in LiteLLM.)
@@ -44,7 +44,7 @@ To allow Cline to use your MCP tools:
 3. Click **Add Server**.
 4. Fill in:
    - **Server Name:** (Choose any name, e.g., `Azure MCP`)
-   - **Server URL:** `http://10.55.55.1:8001/mcp`  
+   - **Server URL:** `http://10.55.55.1:8000/mcp`  
      (Replace with your MCP server IP if different.)
    - **Transport Type:** `Streamable HTTP`
 5. Click **Add Server**.
