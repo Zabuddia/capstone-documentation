@@ -1,4 +1,4 @@
-## Ubuntu Virtual Machine
+# Ubuntu Virtual Machine
 
 ## Purpose: 
 Host web applications and AI services including LiteLLM, OpenWebUI, RAG Website, and an MCP Server.
