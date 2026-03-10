@@ -7,9 +7,16 @@ Provides the **vector search index** that stores and retrieves document chunks f
 
 ## Create Azure AI Search Service
 
-1. Create Azure AI Search service
-2. Enter the name: `chris-rag-testing`
-3. Location: (US) USGov Virginia
-4. Endpoint connectivity: Public
-5. Click **Review + create**
-6. Click **Create**
+1. Search for **Azure AI Search**
+2. Click **+ Create**
+3. Basic Tab:
+
+    * Select a Resource Group
+    * Enter a name: e.g. `chris-rag-testing`
+    * Location: (US) USGov Virginia
+    * Pricing Tier - Free will allow up to 3 indexes, but Basic will give you 15
+    
+4. Select **Review + create**
+5. Networking -Endpoint connectivity: Public
+6. Click **Review + create**
+7. Click **Create**

@@ -62,5 +62,4 @@ To connect your custom Python applications to your deployed models, you need to 
    4. This is the Azure OpenAI Endpoint. It will look similar to `https://ai-aifoundry<regions><ID_numbers>.openai.azure.us/` 
    5. Look for the API Key. Should be near the top of the page.
 
-*(Note: Depending on your application's setup, you may also need the connection details for the Azure AI Search resource you linked earlier. You can find this by clicking on that specific connection under the **Connected resources** menu.)*
 
