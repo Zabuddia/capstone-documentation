@@ -17,6 +17,4 @@ Provides the **vector search index** that stores and retrieves document chunks f
     * Pricing Tier - Free will allow up to 3 indexes, but Basic will give you 15
     
 4. Select **Review + create**
-5. Networking -Endpoint connectivity: Public
-6. Click **Review + create**
-7. Click **Create**
+5. Click **Create**

@@ -20,35 +20,36 @@ Traffic path:
 ## Server Setup (Ubuntu VM)
 
 ### 1) Install necessary libraries
-1. ssh into the virtual machine
-2. Install wireguard:
+- ssh into the virtual machine
+- Install wireguard:
 
 ``` bash
-sudo apt install wireguard-tools`
+sudo apt install wireguard-tools
 ```
 
-### 1) Generate server keys
+### 2) Generate server keys
 
-1. Run tHese commands on the Ubuntu VM:
+- Run these commands on the Ubuntu VM:
 
 ```bash
 sudo umask 077
 sudo wg genkey | sudo tee /etc/wireguard/server_private.key | wg pubkey | sudo tee /etc/wireguard/server_public.key
 ```
 
-2. View and copy the server private key (Paste in server config file wg0.conf):
+- View and copy the server private key (Paste in server config file wg0.conf):
+
 ```bash
 sudo cat /etc/wireguard/server_private.key
 ```
 
-### 2) Create server config: `/etc/wireguard/wg0.conf`
+### 3) Create server config: `/etc/wireguard/wg0.conf`
 
-1. Create/edit the file:
+- Create/edit the file:
 
 ```bash
 sudo nano /etc/wireguard/wg0.conf
 ```
-2. Paste and fill in values:
+- Paste and fill in values:
 
 ```ini
 [Interface]
@@ -77,14 +78,14 @@ Notes:
 - If you do not want the VM to NAT/route traffic for clients, you can remove `PostUp`/`PostDown`.
 
 
-### 3) Enable IP forwarding (server)
+### 4) Enable IP forwarding (server)
 
 ```bash
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-### 4) Azure NSG inbound rules
+### 5) Azure NSG inbound rules
 
 1. Go to your virtual machine in the Azure web service
 2. Locate Settings on left hand menu
@@ -109,7 +110,7 @@ sudo sysctl -p
     * Destination - Any
     * Verify its protocal is TCP
 
-### 5) Start the server
+### 6) Start the server
 
 ```bash
 sudo wg-quick up wg0
@@ -151,7 +152,7 @@ DNS = 8.8.8.8
 
 [Peer]
 PublicKey = <SERVER_PUBLIC_KEY>
-Endpoint = <AZURE_PUBLIC_IP>:51820
+Endpoint = <VM_PUBLIC_IP>:51820
 AllowedIPs = 10.55.55.0/24
 PersistentKeepalive = 25
 ```
@@ -159,7 +160,7 @@ Notes:
 
 - Replace `10.55.55.2` with your assigned client VPN IP.
 - `AllowedIPs = 10.55.55.0/24` is split-tunnel (only the VPN subnet routes through WireGuard).
-- The <Azure_Public_IP> can be found in the Azure Overview of the VM
+- The VM Public IP can be found in the Azure Overview of the VM
 
 Activate the tunnel in the WireGuard app.
 
