@@ -44,14 +44,16 @@ litellm_settings:
   rate_limiter: local
 ```
 
-1. Go to AI Hub
-2. launch AI Foundry
-3. Go into the projects
-4. click into your deployed AI model
+To find the model names:
 
-    * The `model_name: ` can be whatever you want it to be. This is the name that shows up in the applications that access it.
-    * Replace name of `model: azure/<name_given_to_model>` with what you named the deployment of your AI model
-    * Replace the `base_model: gpt-4o` with the name under "Model name" in Azure
+  1. Go to AI Hub
+  2. launch AI Foundry
+  3. Go into the projects
+  4. click into your deployed AI model
+
+      * The `model_name: ` can be whatever you want it to be. This is the name that shows up in the applications that access it.
+      * Replace name of `model: azure/<name_given_to_model>` with what you named the deployment of your AI model
+      * Replace the `base_model: gpt-4o` with the name under "Model name" in Azure
 
 
 Notes:
