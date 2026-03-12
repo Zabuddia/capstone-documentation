@@ -61,11 +61,26 @@ alongside what Azure Search tracks.
     * Search API key can be found by going into that resource, open up Settings on the left side meny, then go into keys.
 
 
+### Install and start
+
+```bash
+mkdir -p ~/rag-website
+cd ~/rag-website
+# Put all of the files into this folder
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+sudo nano /etc/systemd/system/rag-website.service
+# Paste the unit below, fill in the real key values
+```
 ## systemd Unit
 
-`/etc/systemd/system/rag-website.service`
+File Location: `/etc/systemd/system/rag-website.service`
 
 ```ini
+# paste this entire unit 
 [Unit]
 Description=RAG Website (Flask)
 After=network-online.target
@@ -85,20 +100,9 @@ Environment=AZURE_LLM_API_KEY_ARIZONA=your-openai-key-here # update with key
 WantedBy=multi-user.target
 ```
 
-### Install and start
+Continue the process in the terminal 
 
 ```bash
-mkdir -p ~/rag-website
-cd ~/rag-website
-# Put all of the files into this folder
-
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-sudo nano /etc/systemd/system/rag-website.service
-# Paste the unit above, fill in the real key values
-
 sudo systemctl daemon-reload
 sudo systemctl enable --now rag-website
 
