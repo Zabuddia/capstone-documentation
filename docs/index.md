@@ -741,3 +741,15 @@ Use the architecture diagram below to jump directly to each component's document
     </g>
   </g>
 </svg>
+
+# Order to Create Architecture 
+1. [Azure AI Foundry](azure-ai-foundry.md#azure-ai-foundry)
+2. [Azure AI Search](azure-ai-search.md#azure-ai-search)
+3. [Azure Ubuntu VM](ubuntu-virtual-machine.md#ubuntu-virtual-machine)
+4. [Wireguard](wireguard.md#wireguard)
+5. [Docker](docker.md#docker)
+6. [LiteLLM](litellm.md#litellm)
+7. [Rag Website](rag-website.md#rag-website)
+8. [MCP Server](mcp-server.md#mcp-server)
+9. [OpenWebUI](openwebui.md#openwebui)
+10. [VS Code - Cline](visual-studio-code-cline.md#visual-studio-code-cline)
