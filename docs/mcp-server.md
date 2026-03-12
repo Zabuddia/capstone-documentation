@@ -40,8 +40,31 @@ Each tool:
 - Returns formatted text results.
 - Defaults to `AZURE_SEARCH_DEFAULT_TOP_K` results.
 
+## Step-by-step: install & run on Ubuntu VM
 
-## Files
+### 1) Create project folder
+
+```bash
+mkdir -p ~/mcp-server
+cd ~/mcp-server
+```
+Put the `config.py`, `requirements.txt` and `server.py` in this folder before moving on. See files below.
+
+### 2) Create virtual environment
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3) Install dependencies
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+## Create following files in the mcp-server folder
 
 ### `requirements.txt`
 
@@ -56,9 +79,9 @@ mcpo
 
 ```py
 # ---------- Azure AI Search ----------
-AZURE_SEARCH_ENDPOINT = "https://chris-rag-testing.search.azure.us"
+AZURE_SEARCH_ENDPOINT = "https://<search_ai_resource_name>.search.azure.us" # update endpoint
 AZURE_SEARCH_API_VERSION = "2023-11-01"
-AZURE_SEARCH_API_KEY = "PASTE_YOUR_AZURE_SEARCH_API_KEY_HERE"
+AZURE_SEARCH_API_KEY = "PASTE_YOUR_AZURE_SEARCH_API_KEY_HERE" # update key
 
 AZURE_SEARCH_DEFAULT_TOP_K = 5
 SEARCH_TIMEOUT_SECONDS = 30
@@ -218,11 +241,28 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+
+## Production run (systemd)
+
+Run this command in the Ubuntu VM terminal. See mcp and mcpo service files below.
+
+```bash
+sudo nano /etc/systemd/system/mcp-server.service
+# Paste mcp-server.service
+
+sudo nano /etc/systemd/system/mcpo.service
+# Paste mcpo.service.
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now mcp-server
+sudo systemctl enable --now mcpo
+```
+
 ## systemd Units
 
 ### MCP Service
 
-`/etc/systemd/system/mcp-server.service`
+File location: `/etc/systemd/system/mcp-server.service`
 
 ```ini
 [Unit]
@@ -232,9 +272,9 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=byu_azure
-WorkingDirectory=/home/byu_azure/mcp-server
-ExecStart=/home/byu_azure/mcp-server/.venv/bin/python /home/byu_azure/mcp-server/server.py
+User=<VM_USER_NAME>
+WorkingDirectory=/home/<VM_USER_NAME>/mcp-server
+ExecStart=/home/<VM_USER_NAME>/mcp-server/.venv/bin/python /home/<VM_USER_NAME>/mcp-server/server.py
 Restart=on-failure
 RestartSec=2
 
@@ -244,7 +284,7 @@ WantedBy=multi-user.target
 
 ### MCPO Service
 
-`/etc/systemd/system/mcpo.service`
+File location: `/etc/systemd/system/mcpo.service`
 
 ```ini
 [Unit]
@@ -254,13 +294,13 @@ After=network-online.target mcp-server.service
 
 [Service]
 Type=simple
-User=byu_azure
-WorkingDirectory=/home/byu_azure/mcp-server
+User=<VM_USER_NAME>
+WorkingDirectory=/home/<VM_USER_NAME>/mcp-server
 
 # Wait until MCP server is reachable (kills the startup race)
 ExecStartPre=/usr/bin/bash -lc 'for i in {1..60}; do code="$(curl -s -o /dev/null -w "%{http_code}" --max-time 1 http://10.55.55.1:8000/mcp || true)"; if [[ "$code" == "200" || "$code" == "202" || "$code" == "406" ]]; then exit 0; fi; sleep 1; done; echo "MCP not reachable (last HTTP $code)"; exit 1'
 
-ExecStart=/home/byu_azure/mcp-server/.venv/bin/mcpo \
+ExecStart=/home/<VM_USER_NAME>/mcp-server/.venv/bin/mcpo \
   --host 10.55.55.1 \
   --port 8001 \
   --server-type "streamable-http" \
@@ -271,49 +311,4 @@ RestartSec=2
 
 [Install]
 WantedBy=multi-user.target
-```
-
-## Step-by-step: install & run on Ubuntu VM
-
-### 1) Create project folder
-
-```bash
-mkdir -p ~/mcp-server
-cd ~/mcp-server
-```
-Put the `config.py` and `server.py` in this folder.
-
-### 2) Install OS packages
-
-```bash
-sudo apt update
-sudo apt install -y python3 python3-venv python3-pip
-```
-
-### 3) Create virtual environment
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-### 4) Install dependencies
-
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-## Production run (systemd)
-
-```bash
-sudo nano /etc/systemd/system/mcp-server.service
-# Paste mcp-server.service
-
-sudo nano /etc/systemd/system/mcpo.service
-# Paste mcpo.service
-
-sudo systemctl daemon-reload
-sudo systemctl enable --now mcp-server
-sudo systemctl enable --now mcpo
 ```

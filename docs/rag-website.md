@@ -56,12 +56,14 @@ alongside what Azure Search tracks.
 ## Steps:
 
 1. Make an text-embedding model [text-embedding model](azure-ai-foundry.md#step-3-deploy-an-ai-model)
-2. Make files and paste in the corresponding blocks of code below
+2. Run the following commands and create specified files with their corresponding blocks of code
 
-    * Search API key can be found by going into that resource, open up Settings on the left side meny, then go into keys.
+Note: Search API key can be found by going into that resource in Azure, open up Settings on the left side meny, then go into keys.
 
 
 ### Install and start
+
+Run in Ubuntu VM: 
 
 ```bash
 mkdir -p ~/rag-website
@@ -88,9 +90,9 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=<VM_user_name> # will need to update this to the chosen user name when the VM was created
-WorkingDirectory=/home/<VM_user_name>/rag-website # update with user name
-ExecStart=/home/<VM_user_name>/rag-website/.venv/bin/python /home/<VM_user_name>/rag-website/server.py --host 10.55.55.1 --port 7000 # update with user name
+User=<VM_USER_NAME> # will need to update this to the chosen user name when the VM was created
+WorkingDirectory=/home/<VM_USER_NAME>/rag-website # update with user name
+ExecStart=/home/<VM_USER_NAME>/rag-website/.venv/bin/python /home/<VM_USER_NAME>/rag-website/server.py --host 10.55.55.1 --port 7000 # update with user name
 Restart=on-failure
 RestartSec=2
 Environment=AZURE_SEARCH_KEY=your-search-key-here # update with key
@@ -117,7 +119,7 @@ The UI will be at `http://10.55.55.1:7000`.
 
 ---
 
-## Files
+## Create following files in the rag-website folder
 
 ### `requirements.txt`
 
@@ -159,9 +161,6 @@ import logging
 import threading
 import uuid
 
-
-
-
 class Server:
     def __init__(self, config_path):
         self.azure_client = AzureClient(config_path)
@@ -178,7 +177,6 @@ class Server:
         self.job_progress = {} # shared tracker for background jobs
         self.app.add_url_rule("/status/<task_id>", view_func=self.get_status, methods=['GET'])
    
-
     def _return_message(self, message, success=True):
         if success:
             return render_template("success_message.html", message=message)
@@ -264,7 +262,6 @@ class Server:
                 break
         return render_template("edit_index.html", index=info)
         
-
     def show_create_index(self):
         return render_template("create_index.html")
 
@@ -285,7 +282,6 @@ class Server:
         index_name = request.form.get("index_name")
         if not index_name:
             return jsonify({"error": "Index name is required"}), 400
-        
         try:
             self.azure_client.delete_index(index_name)
             self.index_info_list.delete_index_info(index_name)
@@ -336,13 +332,11 @@ class Server:
         # Mark as finished when the loop exits
         self.job_progress[task_id]["status"] = "completed"
 
-
     def add_route(self, route, handler):
         self.app.add_url_rule(route, view_func=handler, methods=['POST', 'GET'])
 
     def start(self, host="127.0.0.1", port=5000):
         self.app.run(host=host, port=port)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -456,7 +450,6 @@ class AzureClient:
         if not self.embedding_config:
             raise ValueError("Missing embedding section in config.yaml")
 
-
     def _index_exists(self, index_name):
         """
         Check if an index exists within the Azure database
@@ -524,7 +517,6 @@ class AzureClient:
     def _chunk_pdf(self, doc, chunk_size=800):
         enc = tiktoken.get_encoding("cl100k_base")
 
-
         def chunk_text(text, max_tokens=chunk_size):
             tokens = enc.encode(text)
             chunks = []
@@ -551,8 +543,7 @@ class AzureClient:
             input=text
         )
 
-        return response.data[0].embedding
-            
+        return response.data[0].embedding  
 
     def upload_pdf(self, pdf, index_name, chunk_size=800, upload_freq=50):
         """
@@ -762,7 +753,6 @@ class AzureClient:
                 except ValueError:
                     print("Invalid input. Moving on...")
 
-
     def delete_index(self, index_name):
         """
         Deletes the specified index from the Azure Search service.
@@ -784,7 +774,6 @@ import os
 
 INFO_PATH = "config/index_info.json"
 
-
 class IndexInfo(BaseModel):
     name: str
     dimensions: int
@@ -792,7 +781,6 @@ class IndexInfo(BaseModel):
     description: str
     status: str
     documents: Optional[int] = None
-
 
 class IndexList:
     def __init__(self):
@@ -810,7 +798,6 @@ class IndexList:
                 json.dump({"indexes": []}, f)
             self.indexes = []
 
-
     def get_index_info(self, index_name) -> IndexInfo | None:
         for idx in self.indexes:
             if idx.name == index_name:
@@ -825,7 +812,6 @@ class IndexList:
             self.indexes.append(index_info)
         with open(INFO_PATH, "w") as f:
             json.dump({"indexes": [idx.model_dump() for idx in self.indexes]}, f, indent=4)
-
 
     def delete_index_info(self, index_name):
         self.indexes = [idx for idx in self.indexes if idx.name != index_name]
