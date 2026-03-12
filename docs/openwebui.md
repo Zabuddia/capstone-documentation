@@ -12,7 +12,7 @@ Provide a web UI for chatting with models through your **LiteLLM** server (OpenA
 
 ## 1) Run OpenWebUI in Docker
 
-Use this command:
+Use this command on the Ubuntu VM:
 
 ```bash
 docker run -d \
@@ -49,6 +49,7 @@ After it starts:
 2. On a fresh install, OpenWebUI will show a first-run flow (signup / create account).
 3. **The first user account created becomes the Admin** (this is how you “bootstrap” admin access).
 
+Note: It may take a few minutes to start up before being able to open it on the web browser.
 
 ## 3) Creating additional accounts
 
@@ -70,9 +71,6 @@ If you want a totally open instance (no logins), run with:
 -e WEBUI_AUTH=False
 ```
 
-**Important:** only do this if the service is restricted to a trusted network (you are binding to `10.55.55.1`, which is good).
-
-
 ## 5) Verify it’s up
 
 ```bash
@@ -89,7 +87,7 @@ docker logs -n 200 open-webui
 OpenWebUI tool/MCP integration can be configured from the UI, but the standard approach is:
 
 1. Log in as **Admin**
-2. Open the **Admin Panel** → **Settings** → **External Tools**
+2. Open the **Admin Panel** → **Settings** → **Integrations** → **Manage Tool Servers** →**Add Connection**
 3. Add a new tool server with:
    - **Type:** `OpenAPI`
    - **OpenAPI Spec:** `URL: openapi.json`

@@ -51,6 +51,14 @@ alongside what Azure Search tracks.
 |---|---|
 | `AZURE_SEARCH_KEY` | Azure AI Search API key |
 | `AZURE_LLM_API_KEY_ARIZONA` | Azure OpenAI embedding API key |
+| `AZURE_LLM_API_KEY_VIRGINIA` | Azure OpenAI embedding API key |
+
+## Steps:
+
+1. Make an text-embedding model [text-embedding model](azure-ai-foundry.md#step-3-deploy-an-ai-model)
+2. Make files and paste in the corresponding blocks of code below
+
+    * Search API key can be found by going into that resource, open up Settings on the left side meny, then go into keys.
 
 
 ## systemd Unit
@@ -65,13 +73,13 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=byu_azure
-WorkingDirectory=/home/byu_azure/CapstoneRAGTool
-ExecStart=/home/byu_azure/CapstoneRAGTool/.venv/bin/python /home/byu_azure/CapstoneRAGTool/server.py --host 10.55.55.1 --port 7000
+User=<VM_user_name> # will need to update this to the chosen user name when the VM was created
+WorkingDirectory=/home/<VM_user_name>/rag-website # update with user name
+ExecStart=/home/<VM_user_name>/rag-website/.venv/bin/python /home/<VM_user_name>/rag-website/server.py --host 10.55.55.1 --port 7000 # update with user name
 Restart=on-failure
 RestartSec=2
-Environment=AZURE_SEARCH_KEY=your-search-key-here
-Environment=AZURE_LLM_API_KEY_ARIZONA=your-openai-key-here
+Environment=AZURE_SEARCH_KEY=your-search-key-here # update with key
+Environment=AZURE_LLM_API_KEY_ARIZONA=your-openai-key-here # update with key
 
 [Install]
 WantedBy=multi-user.target
