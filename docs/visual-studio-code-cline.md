@@ -34,24 +34,23 @@ Open Cline settings and configure the following:
   (Example: `gpt-4o`, or whatever alias you configured in LiteLLM.)
 Save the configuration.
 
-
 ## 4) Connect to the MCP Server
 
 To allow Cline to use your MCP tools:
 
-1. In Cline, click **MCP Servers**.
+1. In Cline, click **MCP Servers** at the top of the Cline extension pop-out.
 2. Go to **Remote Servers**.
-3. Click **Add Server**.
-4. Fill in:
-   - **Server Name:** (Choose any name, e.g., `Azure MCP`)
-   - **Server URL:** `http://10.55.55.1:8000/mcp`  
-     (Replace with your MCP server IP if different.)
-   - **Transport Type:** `Streamable HTTP`
-5. Click **Add Server**.
+3. Fill in:
+
+    - **Server Name:** (Choose any name, e.g., `Azure MCP`)
+    - **Server URL:** `http://10.55.55.1:8000/mcp`  
+      (Replace with your MCP server IP if different.)
+    - **Transport Type:** `Streamable HTTP`
+
+4. Click **Add Server**.
 
 Your MCP tools exposed by the MCP Server should now be available inside
 Cline.
-
 
 ## Notes
 
