@@ -50,7 +50,6 @@ nav:
   - Docker: docker.md
   - LiteLLM: litellm.md
   - OpenWebUI: openwebui.md
-  - LibreChat: librechat.md
   - RAG Website: rag-website.md
   - MCP Server: mcp-server.md
   - Azure AI Search: azure-ai-search.md
