@@ -26,6 +26,7 @@ theme:
     code: JetBrains Mono
   features:
     - navigation.sections
+    - navigation.footer
     - navigation.top
     - toc.follow
     - content.code.copy
@@ -36,21 +37,26 @@ theme:
 plugins:
   - search
 
+extra_css:
+  - stylesheets/extra.css
+
 markdown_extensions:
   - toc:
       permalink: true
 
 nav:
   - Home: index.md
-  - WireGuard: wireguard.md
-  - Azure API: azure-api.md
-  - Visual Studio Code (Cline): visual-studio-code-cline.md
-  - Web Browser: web-browser.md
-  - Ubuntu Virtual Machine: ubuntu-virtual-machine.md
-  - Docker: docker.md
-  - LiteLLM: litellm.md
-  - OpenWebUI: openwebui.md
-  - RAG Website: rag-website.md
-  - MCP Server: mcp-server.md
-  - Azure AI Search: azure-ai-search.md
-  - Azure AI Foundry: azure-ai-foundry.md
+  - Build Order:
+      - Azure AI Foundry: azure-ai-foundry.md
+      - Azure AI Search: azure-ai-search.md
+      - Ubuntu Virtual Machine: ubuntu-virtual-machine.md
+      - WireGuard: wireguard.md
+      - Docker: docker.md
+      - LiteLLM: litellm.md
+      - RAG Website: rag-website.md
+      - MCP Server: mcp-server.md
+      - OpenWebUI: openwebui.md
+      - Visual Studio Code (Cline): visual-studio-code-cline.md
+  - Reference:
+      - Web Browser: web-browser.md
+      - Azure API: azure-api.md

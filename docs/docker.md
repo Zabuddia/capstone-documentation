@@ -1,91 +1,100 @@
 # Docker
 
 ## Purpose
-Run apps in isolated containers so they are easy to install, start/stop,
-upgrade, and survive reboots.
 
+Install Docker Engine and Docker Compose on the Ubuntu VM so the containerized
+parts of the stack can run and restart automatically.
 
-## Install Docker Engine + Docker Compose
+## Run Location
 
-This installs Docker from Docker's official repository.
+Ubuntu VM.
+
+## Before You Start
+
+- The [Ubuntu VM](ubuntu-virtual-machine.md#ubuntu-virtual-machine) is created
+  and reachable over SSH
+- The VM user has `sudo` access
+- The Ubuntu package repositories are reachable from the VM
+
+## Context
+
+LiteLLM and OpenWebUI run in Docker containers in this project. The Python
+applications use virtual environments and systemd instead.
+
+## Steps
+
+### Step 1: Install Docker repository prerequisites
 
 ```bash
 sudo apt update
-sudo apt install -y ca-certificates curl gnupg
-
-sudo install -m 0755 -d /etc/apt/keyrings
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg |   sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg]   https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt update
-
-sudo apt install -y docker-ce docker-ce-cli containerd.io   docker-buildx-plugin docker-compose-plugin
 ```
-Enable Docker at boot:
+
+```bash
+sudo apt install -y ca-certificates curl gnupg
+```
+
+```bash
+sudo install -m 0755 -d /etc/apt/keyrings
+```
+
+### Step 2: Add Docker's official apt repository
+
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+
+```bash
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
+
+```bash
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+### Step 3: Install Docker Engine and Compose
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+### Step 4: Enable Docker at boot
 
 ```bash
 sudo systemctl enable --now docker
 ```
-Allow your user to run Docker without `sudo`:
+
+### Step 5: Allow the VM user to run Docker without `sudo`
 
 ```bash
-sudo usermod -aG docker $USER
+sudo usermod -aG docker "$USER"
+```
+
+Apply the new group membership in the current shell:
+
+```bash
 newgrp docker
 ```
-Verify installation:
+
+### Step 6: Validate the installation
 
 ```bash
 docker --version
-docker compose version
 ```
 
-## Common Commands
-
-List running containers:
+```bash
+docker compose version
+```
 
 ```bash
 docker ps
 ```
-View logs:
 
-```bash
-docker logs -n 200 <container>
-```
-Restart container:
+## What You Just Set Up
 
-```bash
-docker restart <container>
-```
-Stop & remove container:
-
-```bash
-docker rm -f <container>
-```
-Pull image:
-
-```bash
-docker pull <image:tag>
-```
-
-## Updating a Container (Manual `docker run`)
-
-```bash
-docker pull <image:tag>
-docker rm -f <container>
-# re-run your docker run command
-```
-If you are using volumes, your data is preserved.
-
-
-## Updating a Docker Compose App
-
-```bash
-docker compose pull
-docker compose up -d
-```
-This recreates containers with the latest images while keeping
-persistent volumes intact.
+Docker is now installed on the VM and starts automatically at boot. The VM user
+can run Docker commands without `sudo`, and the environment is ready for the
+LiteLLM and OpenWebUI setup pages.

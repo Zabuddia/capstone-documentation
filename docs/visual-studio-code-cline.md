@@ -1,59 +1,76 @@
 # Visual Studio Code (Cline)
 
 ## Purpose
-Use Visual Studio Code with the Cline extension to interact with your LiteLLM server and MCP tools directly from your development environment.
 
+Use Visual Studio Code with the Cline extension to connect to LiteLLM and the
+MCP server from a local development workstation.
 
-## 1) Install Visual Studio Code
+## URL
 
-1. Go to: https://code.visualstudio.com
-2. Download the installer for your operating system (Windows, macOS, or Linux).
+- Visual Studio Code download: `https://code.visualstudio.com/`
+- LiteLLM endpoint: `http://10.55.55.1:4000`
+- MCP endpoint: `http://10.55.55.1:8000/mcp`
+
+## Run Location
+
+Local workstation.
+
+## Before You Start
+
+- [WireGuard](wireguard.md#wireguard) is connected on the local machine
+- [LiteLLM](litellm.md#litellm) is running
+- [MCP Server](mcp-server.md#mcp-server) is running if tool access is needed
+
+## Context
+
+Cline uses LiteLLM as an OpenAI-compatible provider and connects to the MCP
+server over Streamable HTTP. The model name entered in Cline must match the
+alias exposed by LiteLLM, such as `gpt-4o`.
+
+## Steps
+
+### Step 1: Install Visual Studio Code
+
+1. Open `https://code.visualstudio.com/`.
+2. Download the installer for the local operating system.
 3. Install and launch Visual Studio Code.
 
-
-## 2) Install the Cline Extension
+### Step 2: Install the Cline extension
 
 1. Open Visual Studio Code.
-2. Click the **Extensions** icon on the left sidebar (or press `Ctrl+Shift+X`).
+2. Open the **Extensions** view with `Ctrl+Shift+X`.
 3. Search for **Cline**.
-4. Click **Install**.
+4. Install the extension.
 
+### Step 3: Configure Cline to use LiteLLM
 
-## 3) Configure Cline to Use LiteLLM
-
-Open Cline settings and configure the following:
+In the Cline settings, set:
 
 - **API Provider:** `OpenAI Compatible`
-- **Base URL:**
-  `http://10.55.55.1:4000`  
-  (Replace with your LiteLLM server IP if different.)
-- **OpenAI Compatible API Key:**
-  None.
-- **Model ID:**
-  Enter the model name exactly as defined in your LiteLLM configuration file.  
-  (Example: `gpt-4o`, or whatever alias you configured in LiteLLM.)
-Save the configuration.
+- **Base URL:** `http://10.55.55.1:4000`
+- **OpenAI Compatible API Key:** leave blank
+- **Model ID:** the LiteLLM model alias, such as `gpt-4o`
 
-## 4) Connect to the MCP Server
+Save the settings after updating them.
 
-To allow Cline to use your MCP tools:
+### Step 4: Connect Cline to the MCP server
 
-1. In Cline, click **MCP Servers** at the top of the Cline extension pop-out.
-2. Go to **Remote Servers**.
-3. Fill in:
+1. Open **MCP Servers** in the Cline panel.
+2. Open **Remote Servers**.
+3. Add a server with:
+   - **Server Name:** any label, such as `Azure MCP`
+   - **Server URL:** `http://10.55.55.1:8000/mcp`
+   - **Transport Type:** `Streamable HTTP`
+4. Save the server entry.
 
-    - **Server Name:** (Choose any name, e.g., `Azure MCP`)
-    - **Server URL:** `http://10.55.55.1:8000/mcp`  
-      (Replace with your MCP server IP if different.)
-    - **Transport Type:** `Streamable HTTP`
+### Step 5: Confirm the connections
 
-4. Click **Add Server**.
+1. Open a new Cline chat.
+2. Confirm that the LiteLLM model alias appears in the model selection.
+3. Confirm that the MCP server tools are available in the chat UI.
 
-Your MCP tools exposed by the MCP Server should now be available inside
-Cline.
+## What You Just Set Up
 
-## Notes
-
-- Ensure you are connected to WireGuard if accessing `10.55.55.1` over the VPN.
-- Confirm LiteLLM is running on port `4000`.
-- Confirm MCP Server is running on port `8000`.
+Visual Studio Code and Cline are now connected to the private VM stack. Cline
+can send model requests through LiteLLM and, when enabled, use the MCP tools
+backed by Azure AI Search.

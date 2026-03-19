@@ -1,9 +1,37 @@
 # Capstone Documentation
 
-Use the architecture diagram below to jump directly to each component's documentation page.
+This site documents the recommended order for building the full environment:
+Azure AI Foundry and Azure AI Search in Azure, an Ubuntu VM to host the
+services, WireGuard for private access, Docker for containerized apps,
+LiteLLM for a shared model endpoint, the RAG website for index management,
+the MCP server for tool access, and OpenWebUI or Cline as the user-facing
+clients.
+
+If you are building the stack from scratch, follow the pages in the
+**Build Order** section of the left navigation. The bottom of each page now
+includes previous/next arrows so you can continue without returning here.
+
+## Architecture Overview
+
+In plain language, the architecture works like this:
+
+1. **Azure AI Foundry** hosts the deployed models and provides the API keys
+   and endpoints the VM-based services use.
+2. **Azure AI Search** stores the searchable chunks that power retrieval.
+3. The **Ubuntu VM** is the private application host for LiteLLM,
+   OpenWebUI, the RAG website, and the MCP server.
+4. **WireGuard** gives approved users private access to the VM over
+   `10.55.55.1` instead of exposing those apps publicly.
+5. **LiteLLM** gives clients a single OpenAI-compatible endpoint for the
+   deployed Azure model.
+6. The **RAG website** creates and manages indexes in Azure AI Search.
+7. The **MCP server** exposes those search indexes as callable tools.
+8. **OpenWebUI** and **Cline** are the main user interfaces that connect to
+   LiteLLM and optionally the MCP tools.
 
 ## Architecture Diagram
 
+<div class="architecture-diagram-shell">
 
 <!-- SVG START -->
 <svg
@@ -741,15 +769,17 @@ Use the architecture diagram below to jump directly to each component's document
     </g>
   </g>
 </svg>
+</div>
 
-# Order to Create Architecture 
+## Order to Create Architecture
+
 1. [Azure AI Foundry](azure-ai-foundry.md#azure-ai-foundry)
 2. [Azure AI Search](azure-ai-search.md#azure-ai-search)
-3. [Azure Ubuntu VM](ubuntu-virtual-machine.md#ubuntu-virtual-machine)
-4. [Wireguard](wireguard.md#wireguard)
+3. [Ubuntu Virtual Machine](ubuntu-virtual-machine.md#ubuntu-virtual-machine)
+4. [WireGuard](wireguard.md#wireguard)
 5. [Docker](docker.md#docker)
 6. [LiteLLM](litellm.md#litellm)
-7. [Rag Website](rag-website.md#rag-website)
+7. [RAG Website](rag-website.md#rag-website)
 8. [MCP Server](mcp-server.md#mcp-server)
 9. [OpenWebUI](openwebui.md#openwebui)
-10. [VS Code - Cline](visual-studio-code-cline.md#visual-studio-code-cline)
+10. [Visual Studio Code (Cline)](visual-studio-code-cline.md#visual-studio-code-cline)

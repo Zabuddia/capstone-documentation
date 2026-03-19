@@ -1,72 +1,96 @@
 # Ubuntu Virtual Machine
 
-## Purpose: 
-Host web applications and AI services including LiteLLM, OpenWebUI, RAG Website, and an MCP Server.
+## Purpose
 
-**Host / location:** Microsoft Azure
+Create the Ubuntu VM that hosts the private application stack:
 
-**OS version:** Ubuntu Server 24.04
+- LiteLLM
+- OpenWebUI
+- RAG Website
+- MCP Server
 
-**IPs / networking:**
+## Run Location
 
-* Configured with a Public IP (set to allow during setup, subject to change once configured)
-* Basic NIC network security group
-* Public inbound ports allowed: SSH
+Azure portal for VM creation, a local machine for SSH and `scp`, and the Ubuntu
+VM for package installation.
 
-**Services Running:**
+## Before You Start
 
-* LiteLLM
-* Open WebUI
-* Rag Website
-* MCP Server
+- An Azure Government subscription and resource group
+- An SSH public key, or a plan to generate one during VM creation
+- Permission to create compute and networking resources in the subscription
 
-**Startup / systemd:**
+## Context
 
-* Docker Services (OpenWebUI, LiteLLM): Managed via Docker with `--restart unless-stopped` policies (or Docker Compose) so they survive reboots.
+This VM is the host for the rest of the stack. Later pages assume the working
+directories live under `/home/<VM_USER_NAME>/` and that internal services are
+reached over WireGuard at `10.55.55.1`.
 
-* Python Services (RAG Website, MCP Server): Managed via systemd service files running from the Python virtual environment (`venv`) to ensure automatic startup.
+## Steps
 
-**Operational notes:**
+### Step 1: Create the Azure VM
 
-* Hardware Profile: Standard_B2s (2 vCPUs, 4 GiB memory).
-* Authentication: SSH public key. The private key requires restricted permissions to connect.
+1. In the Azure portal, open **Virtual Machines** and select **Create**.
+2. On the **Basics** tab:
+   - Choose the correct subscription and resource group.
+   - Enter a VM name.
+   - Select **Ubuntu Server 24.04**.
+   - Select **Standard_B2s**.
+   - Choose **SSH public key** for authentication.
+   - Allow public inbound port **SSH**.
+3. On the **Networking** tab:
+   - Use the VM virtual network.
+   - Set the NIC network security group to **Basic**.
+   - Allow a public IP during setup.
+   - Keep public inbound access limited to SSH.
+4. Review the configuration and create the VM.
+5. Download the private key if Azure generated one.
 
+### Step 2: Connect to the VM
 
-## 1) Create the Azure Virtual Machine
+On the local machine, set restrictive permissions on the private key:
 
-1. Navigate to Virtual Machines in the Azure portal and click **+ Create**.
-2. Basics Tab:
-    * Select your appropriate Subscription & Resource group.
-    * Verify Region is **Virginia*
-    * Create a Virtual machine name.
-    * Select **Ubuntu Server 24.04** for the Image.
-    * Select **Standard_B2s** (2 vcpus, 4 GiB memory) for the Size.
-    * *(Optional)* Change the user name to your desired name.
-    * Choose **SSH public key** for Authentication type and name the key.
-    * Allow selected ports for Public inbound ports, and select **SSH**.
-3. Networking Tab:
-    * Select a virtual network. `<Virtual_Machine_Name>.vnet`
-    * Set NIC network security group to **Basic**.
-    * Allow **Public IP** for setup (change it once configured).
-    * Allow selected ports for Public inbound ports, and select **SSH**.
-4. Click **Review + create**
-    * Click **Create**
-    * Download private key file
+```bash
+chmod 400 /path/to/your-key.pem
+```
 
-## 2) Connect to the VM
+Connect to the VM from the local machine:
 
-1. In your local terminal, restrict the permissions on your private key file so it is secure:
-  `chmod 400 your-key-name.pem`
-2. In Azure, click **Go to resource**
-3. Navigate to **Connect** on the left side bar 
-4. Under SSH command, copy and paste this command in your local terminal 
-    * Edit the command by pasting the path to your private key where `<Path_to_private_key>` is
+```bash
+ssh -i /path/to/your-key.pem <VM_USER_NAME>@<VM_PUBLIC_IP>
+```
 
-## 3) Upload Files
+### Step 3: Install the base packages on the VM
 
-1. Open another local terminal that is not linked to the VM 
-2. Run command to upload your desired files:
-  `scp -i your-key.pem -r /path/to/your/project azureuser@<PUBLIC-IP>:/home/azureuser/`
-3. In the terminal connected to the VM, install python:
-  `sudo apt update` 
-  `sudo apt install git python3 python3-pip python3-venv –y`
+Run these commands on the Ubuntu VM:
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install -y git python3 python3-pip python3-venv curl
+```
+
+### Step 4: Copy files to the VM when a later page requires it
+
+Several later pages provide starter bundles as `.tar.gz` files. The same
+pattern is used each time.
+
+From the local machine:
+
+```bash
+scp -i /path/to/your-key.pem ~/Downloads/rag-website.tar.gz <VM_USER_NAME>@<VM_PUBLIC_IP>:/home/<VM_USER_NAME>/
+```
+
+On the Ubuntu VM after the upload finishes:
+
+```bash
+tar -xzf ~/rag-website.tar.gz -C ~/
+```
+
+## What You Just Set Up
+
+The Ubuntu VM is now ready for the remaining setup pages. SSH access is in
+place, the base packages are installed, and later pages can add services under
+the VM user account.

@@ -1,0 +1,17 @@
+[Unit]
+Description=RAG Website (Flask)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=<VM_USER_NAME>
+WorkingDirectory=/home/<VM_USER_NAME>/rag-website
+ExecStart=/home/<VM_USER_NAME>/rag-website/.venv/bin/python /home/<VM_USER_NAME>/rag-website/server.py --host 10.55.55.1 --port 7000
+Restart=on-failure
+RestartSec=2
+Environment=AZURE_SEARCH_KEY=<AZURE_AI_SEARCH_API_KEY>
+Environment=AZURE_LLM_API_KEY=<AZURE_OPENAI_API_KEY>
+
+[Install]
+WantedBy=multi-user.target

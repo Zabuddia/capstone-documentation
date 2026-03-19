@@ -1,0 +1,16 @@
+[Unit]
+Description=mcpo (MCP-to-OpenAPI proxy)
+Wants=network-online.target mcp-server.service
+After=network-online.target mcp-server.service
+
+[Service]
+Type=simple
+User=<VM_USER_NAME>
+WorkingDirectory=/home/<VM_USER_NAME>/mcp-server
+ExecStartPre=/usr/bin/bash -lc 'for i in {1..60}; do code="$(curl -s -o /dev/null -w "%{http_code}" --max-time 1 http://10.55.55.1:8000/mcp || true)"; if [[ "$code" == "200" || "$code" == "202" || "$code" == "406" ]]; then exit 0; fi; sleep 1; done; echo "MCP not reachable (last HTTP $code)"; exit 1'
+ExecStart=/home/<VM_USER_NAME>/mcp-server/.venv/bin/mcpo --host 10.55.55.1 --port 8001 --server-type streamable-http -- http://10.55.55.1:8000/mcp
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

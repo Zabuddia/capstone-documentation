@@ -1,0 +1,15 @@
+[Unit]
+Description=azure-search-mcp
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=<VM_USER_NAME>
+WorkingDirectory=/home/<VM_USER_NAME>/mcp-server
+ExecStart=/home/<VM_USER_NAME>/mcp-server/.venv/bin/python /home/<VM_USER_NAME>/mcp-server/server.py
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

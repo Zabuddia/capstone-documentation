@@ -1,0 +1,9 @@
+search_config:
+  endpoint: "https://<search-service-name>.search.azure.us"
+  api_key: AZURE_SEARCH_KEY
+
+embedding:
+  endpoint: "https://<azure-openai-endpoint>.openai.azure.us/"
+  api_key: AZURE_LLM_API_KEY
+  api_version: "2024-02-01"
+  model: "<embedding-deployment-name>"

@@ -1,65 +1,84 @@
 # Azure AI Foundry
 
-**Purpose:**  
+## Purpose
 
-Azure AI Foundry is a unified cloud platform where developers build, test, and manage enterprise AI applications. It acts as a centralized workspace that connects AI models to your organization's data, storage, and security infrastructure.
+Create the Azure AI Foundry resources and model deployment used later by
+LiteLLM and the RAG website.
 
-**Endpoint:** `https://aifoundry0436939217.openai.azure.us`  
+## URL
 
----
+- Azure portal: `https://portal.azure.us/`
+- Project endpoint: created during setup. Format:
+  `https://<azure-openai-endpoint>.openai.azure.us/`
 
-## Part 1: Management Center (Hub Level) Setup
-The Management Center is the administrative control plane used for governance, security, and capacity planning.
+## Run Location
 
-## Step 1: Create an Azure AI Foundry
+Azure portal.
 
-1. Search for `Azure AI Foundry` in the search bar at the top of the portal
-2. Click **+ Create** and select **Hub**
-3. Basics Tab
+## Before You Start
 
-    - Select a resource group
-    - Ensure the Region is USGov Virginia
-    - Create a Name for the Hub
-    - Create a new AI service to include in the Hub
-    
-4. Storage Tab
+- An Azure Government subscription with permission to create AI resources
+- A resource group in the target region
+- Available model quota in the region where the deployment will run
 
-      * Select a storage account. You can create a new storage resource or select one that was already made
-      * Credential store - select Azure Key Vault and create a new Key vault.
-      * Application Insights: This is required for logging and monitoring. Click **Create new** to provision a dedicated instance for this Hub.
-      * Container registry - leave this as **None**.
+## Context
 
-5. Inbound Access Tab - Select **All networks**
-6. Outbound Access - Select **Public**
-7. Encryption Tab - Leave as default (Microsoft-managed keys) unless your agency requires a Customer-managed key.
-8. Review + Create - Review your configurations and click **Create** to provision the Hub.
+This page creates three things: an Azure AI Foundry hub, a project attached to
+that hub, and at least one deployed model. Later pages use the project
+endpoint, deployment name, and API key from this setup.
 
-## Step 2: Create a Project Workspace
+## Steps
 
-1. Once the Hub is deployed, click **Go to resource** and launch the **Azure AI Foundry** at the bottom of the page.
-2. From the Hub menu, click **+ New project**
-3. Enter a Project Name (e.g., `llms-virginia`).
-4. Verify it is linked to the Hub you just created.
-5. Click **Create** to provision the isolated developer workspace.
+### Step 1: Create the Azure AI Foundry hub
 
-## Step 3: Deploy an AI Model
+1. In the Azure portal, search for `Azure AI Foundry`.
+2. Click **+ Create** and choose **Hub**.
+3. On the **Basics** tab:
+   - Select the correct subscription and resource group.
+   - Choose the target region, such as **USGov Virginia**.
+   - Enter a hub name.
+   - Create a new AI service for the hub.
+4. On the **Storage** tab:
+   - Select or create a storage account.
+   - Set the credential store to **Azure Key Vault** and create one if needed.
+   - Create a dedicated **Application Insights** instance.
+   - Leave **Container registry** as **None** unless local requirements say
+     otherwise.
+5. On the **Inbound Access** tab, select **All networks**.
+6. On the **Outbound Access** tab, select **Public**.
+7. On the **Encryption** tab, keep the default setting unless a
+   customer-managed key is required.
+8. Review the configuration and create the hub.
 
-1. In the Project workspace, navigate to **Models + Endpoints** on the left menu.
-2. Click **+ Deploy model**.
-3. Choose an available Azure OpenAI model (e.g., `gpt-4`) and click **Confirm**. *Note: Token per Minute rate differs by model*
-4. Enter a Deployment name (e.g., `gpt-4o-virginia`). 
-5. Select a Deployment type *Note: Select either Standard or Data Zone Standard*
-5. Click **Customize** to adjust your Tokens Per Minute (TPM) slider based on your granted quota.
-6. Click **Deploy**. Once finished, copy the **Endpoint URL** and **API Key** to use in your Python routing application.
+### Step 2: Create the project workspace
 
-## Step 4: Locate Endpoints and Keys
+1. Open the newly created hub.
+2. Launch **Azure AI Foundry** from the hub page.
+3. Select **+ New project**.
+4. Enter a project name, such as `llms-virginia`.
+5. Confirm that the project is linked to the correct hub.
+6. Create the project.
 
-To connect your custom Python applications to your deployed models, you need to gather your specific connection details.
+### Step 3: Deploy an AI Model
 
-   1. In the Azure AI Foundry portal, navigate to your Project (e.g., `llms-virginia`).
-   2. Go to the **Overview** page. 
-   3. Look for the **Project endpoint** in the Endpoints and Keys section. 
-   4. This is the Azure OpenAI Endpoint. It will look similar to `https://ai-aifoundry<regions><ID_numbers>.openai.azure.us/` 
-   5. Look for the API Key. Should be near the top of the page.
+1. In the project workspace, open **Models + Endpoints**.
+2. Select **+ Deploy model**.
+3. Choose the Azure OpenAI model that will be used later, such as `gpt-4o`.
+4. Enter a deployment name, such as `gpt-4o-virginia`.
+5. Select the deployment type required for the environment.
+6. Adjust the Tokens Per Minute setting if needed.
+7. Create the deployment.
 
+### Step 4: Locate Endpoints and Keys
 
+1. Open the project in Azure AI Foundry.
+2. Go to the **Overview** page.
+3. Copy the **Project endpoint**.
+4. Copy one of the available **API keys**.
+5. Record the model deployment name from **Models + Endpoints**.
+
+## What You Just Set Up
+
+Azure AI Foundry is now ready for the rest of the stack. The project contains a
+deployed model, and the project endpoint, API key, and deployment name are
+available for the LiteLLM and RAG website configuration pages.
