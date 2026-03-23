@@ -48,6 +48,11 @@ docker run -d \
 
 ### Step 2: Create the first admin account
 
+!!! note "First account is the admin"
+    The first account created on a fresh OpenWebUI instance automatically
+    becomes the admin. All accounts created after that are regular users.
+    Complete this step before sharing the URL with anyone else.
+
 1. Open `http://10.55.55.1:3000` from a client connected over WireGuard.
 2. Complete the first-run signup flow.
 3. Use that first account as the OpenWebUI admin account.
@@ -68,12 +73,16 @@ docker logs -n 200 open-webui
 2. Open **Admin Panel**.
 3. Go to **Settings** -> **Integrations** -> **Manage Tool Servers**.
 4. Add a connection with:
-   - Type: `OpenAPI`
-   - URL: `http://10.55.55.1:8001`
-   - OpenAPI spec: `openapi.json`
-   - Name: `MCP Server`
+    - Type: `OpenAPI`
+    - URL: `http://10.55.55.1:8001`
+    - OpenAPI spec: `openapi.json`
+    - Name: `MCP Server`
 
 ### Step 5: Reset the instance later if needed
+
+!!! note "This deletes all data"
+    These commands permanently remove all chats, users, and settings stored
+    in the OpenWebUI volume. This cannot be undone.
 
 To remove the container and all persisted OpenWebUI data:
 

@@ -141,14 +141,6 @@ sudo systemctl status mcpo
 ```
 
 ```bash
-sudo journalctl -u mcp-server -n 100 --no-pager
-```
-
-```bash
-sudo journalctl -u mcpo -n 100 --no-pager
-```
-
-```bash
 curl -i http://10.55.55.1:8000/mcp
 ```
 

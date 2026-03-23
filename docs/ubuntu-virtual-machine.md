@@ -1,3 +1,4 @@
+
 # Ubuntu Virtual Machine
 
 ## Purpose
@@ -32,19 +33,30 @@ reached over WireGuard at `10.55.55.1`.
 
 1. In the Azure portal, open **Virtual Machines** and select **Create**.
 2. On the **Basics** tab:
-   - Choose the correct subscription and resource group.
-   - Enter a VM name.
-   - Select **Ubuntu Server 24.04**.
-   - Select **Standard_B2s**.
-   - Choose **SSH public key** for authentication.
-   - Allow public inbound port **SSH**.
+    - Choose the correct subscription and resource group.
+    - Enter a VM name.
+    - Select **Ubuntu Server 24.04**.
+    - Select **Standard_B2s** for the size (~$35.62/month while running).
+      Other sizes are available if more CPU or memory is needed — click
+      **See all sizes** to browse options by series, vCPUs, RAM, and cost.
+    - Choose **SSH public key** for authentication.
+    - Allow public inbound port **SSH**.
 3. On the **Networking** tab:
-   - Use the VM virtual network.
-   - Set the NIC network security group to **Basic**.
-   - Allow a public IP during setup.
-   - Keep public inbound access limited to SSH.
+    - **Virtual network**: select an existing VNet or create a new one.
+    - **Subnet**: leave as the default subnet.
+    - **Public IP**: leave the default (a new public IP will be created).
+    - **NIC network security group**: select **Basic**.
+    - **Public inbound ports**: select **Allow selected ports**.
+    - **Select inbound ports**: select **SSH (22)**.
+    - Leave all other settings at their defaults.
 4. Review the configuration and create the VM.
 5. Download the private key if Azure generated one.
+
+!!! note "VM Pricing"
+    Azure charges for the VM while it is in the **Running** state. To pause
+    charges, open the VM in the portal and click **Stop** to deallocate it.
+    Disk storage costs continue at a lower rate while deallocated. Charges
+    resume when the VM is started again.
 
 ### Step 2: Connect to the VM
 
@@ -77,13 +89,13 @@ sudo apt install -y git python3 python3-pip python3-venv curl
 Several later pages provide starter bundles as `.tar.gz` files. The same
 pattern is used each time.
 
-From the local machine:
+From the local machine, upload the file:
 
 ```bash
 scp -i /path/to/your-key.pem ~/Downloads/rag-website.tar.gz <VM_USER_NAME>@<VM_PUBLIC_IP>:/home/<VM_USER_NAME>/
 ```
 
-On the Ubuntu VM after the upload finishes:
+On the Ubuntu VM, extract the uploaded file:
 
 ```bash
 tar -xzf ~/rag-website.tar.gz -C ~/

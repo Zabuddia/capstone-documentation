@@ -31,19 +31,19 @@ endpoint, deployment name, and API key from this setup.
 
 ### Step 1: Create the Azure AI Foundry hub
 
-1. In the Azure portal, search for `Azure AI Foundry`.
+1. In the Azure portal, search for **Azure AI Foundry**.
 2. Click **+ Create** and choose **Hub**.
 3. On the **Basics** tab:
-   - Select the correct subscription and resource group.
-   - Choose the target region, such as **USGov Virginia**.
-   - Enter a hub name.
-   - Create a new AI service for the hub.
+    - Select the correct subscription and resource group.
+    - Choose the target region, such as **USGov Virginia**.
+    - Enter a hub name.
+    - Create a new AI service for the hub.
 4. On the **Storage** tab:
-   - Select or create a storage account.
-   - Set the credential store to **Azure Key Vault** and create one if needed.
-   - Create a dedicated **Application Insights** instance.
-   - Leave **Container registry** as **None** unless local requirements say
-     otherwise.
+    - Select or create a storage account.
+    - Set the credential store to **Azure Key Vault** and create one if needed.
+    - Create a dedicated **Application Insights** instance.
+    - Leave **Container registry** as **None** unless local requirements say
+      otherwise.
 5. On the **Inbound Access** tab, select **All networks**.
 6. On the **Outbound Access** tab, select **Public**.
 7. On the **Encryption** tab, keep the default setting unless a
@@ -69,9 +69,17 @@ endpoint, deployment name, and API key from this setup.
 6. Adjust the Tokens Per Minute setting if needed.
 7. Create the deployment.
 
+!!! note "Deprecated models"
+    Some models listed in the catalog cannot be deployed because they have been
+    deprecated. If deployment fails with a `ServiceModelDeprecated` error, the
+    selected model version is no longer available — choose a different model or
+    a newer version. For example, `gpt-4` (version `1106-Preview`) was
+    deprecated on 06/30/2025. Use `gpt-4o` or another active model instead.
+
 ### Step 4: Locate Endpoints and Keys
 
-1. Open the project in Azure AI Foundry.
+1. Open the project in Azure AI Foundry. If the hub page opens instead of the
+   project, click **Go to project** to enter the project workspace.
 2. Go to the **Overview** page.
 3. Copy the **Project endpoint**.
 4. Copy one of the available **API keys**.

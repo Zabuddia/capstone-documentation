@@ -79,6 +79,11 @@ Apply the new group membership in the current shell:
 newgrp docker
 ```
 
+!!! note "Session vs. login"
+    `newgrp docker` applies the group change to the current shell session
+    only. If you open a new SSH connection later, the group will already be
+    active and `newgrp` is not needed again.
+
 ### Step 6: Validate the installation
 
 ```bash

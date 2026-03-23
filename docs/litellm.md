@@ -83,8 +83,10 @@ docker run -d \
   --config /app/config.yaml
 ```
 
-This example does not set a LiteLLM master key. With that configuration,
-clients on WireGuard can connect without sending an API key.
+!!! note "No API key required"
+    This example does not set a LiteLLM master key. Clients on WireGuard can
+    connect without sending an API key. This is intentional for this setup
+    since the endpoint is only reachable over the private VPN tunnel.
 
 ### Step 4: Validate the LiteLLM endpoint
 

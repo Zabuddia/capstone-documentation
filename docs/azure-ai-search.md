@@ -34,12 +34,17 @@ this page are used again in later setup steps.
 1. In the Azure portal, search for **Azure AI Search**.
 2. Select **+ Create**.
 3. On the **Basics** tab:
-   - Choose the correct subscription and resource group.
-   - Enter a service name, such as `chris-rag-testing`.
-   - Select the region, such as **USGov Virginia**.
-   - Choose the pricing tier.
-     Free supports up to 3 indexes. Basic supports more and is the better fit
-     for larger testing or production use.
+    - Choose the correct subscription and resource group.
+    - Enter a service name, such as `chris-rag-testing`.
+    - Select the region, such as **USGov Virginia**.
+    - Choose the pricing tier. For this project, **Free** or **Basic** are
+      sufficient in most cases. Higher tiers (S, S2, S3, etc.) are available
+      if needed.
+
+!!! note "Free tier limit"
+    Azure only allows one Free tier search service per subscription. If you
+    already have one, creating another will fail with an error — choose
+    **Basic** instead.
 4. Review the configuration and create the service.
 
 ### Step 2: Locate the endpoint and admin key
