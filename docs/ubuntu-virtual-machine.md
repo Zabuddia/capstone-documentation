@@ -18,8 +18,6 @@ VM for package installation.
 ## Before You Start
 
 - An Azure Government subscription and resource group
-- An SSH public key, or a plan to generate one during VM creation
-- Permission to create compute and networking resources in the subscription
 
 ## Context
 
@@ -39,6 +37,7 @@ reached over WireGuard at `10.55.55.1`.
     - Select **Standard_B2s** for the size (~$35.62/month while running).
       Other sizes are available if more CPU or memory is needed — click
       **See all sizes** to browse options by series, vCPUs, RAM, and cost.
+    - **(Optional)** Change the **Username** field to your desired username.
     - Choose **SSH public key** for authentication.
     - Allow public inbound port **SSH**.
 3. On the **Networking** tab:

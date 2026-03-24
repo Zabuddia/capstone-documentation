@@ -15,7 +15,6 @@ device.
 - The [Ubuntu VM](ubuntu-virtual-machine.md#ubuntu-virtual-machine) is created
   and reachable over SSH
 - The VM public IP is available
-- Permission is available to edit the VM network security group in Azure
 
 ## Context
 
@@ -32,41 +31,24 @@ sudo apt update
 ```
 
 ```bash
-sudo apt install -y wireguard wireguard-tools
+sudo apt install -y wireguard-tools
 ```
 
 ### Step 2: Generate the server key pair
 
-Create the key files with restrictive permissions:
+Create the `/etc/wireguard` directory and generate the keys directly into it:
 
 ```bash
-cd ~
-umask 077
-wg genkey | tee server_private.key | wg pubkey > server_public.key
+sudo mkdir -p -m 700 /etc/wireguard
+wg genkey | sudo tee /etc/wireguard/server_private.key | wg pubkey | sudo tee /etc/wireguard/server_public.key > /dev/null
+sudo chmod 600 /etc/wireguard/server_private.key
 ```
 
-Copy the keys into `/etc/wireguard`:
+You will need these values in the next steps:
 
 ```bash
-sudo install -d -m 700 /etc/wireguard
-```
-
-```bash
-sudo install -m 600 server_private.key /etc/wireguard/server_private.key
-sudo install -m 644 server_public.key /etc/wireguard/server_public.key
-rm server_private.key server_public.key
-```
-
-Save the server public key for the client configuration:
-
-```bash
-sudo cat /etc/wireguard/server_public.key
-```
-
-Copy the server private key for the server configuration file:
-
-```bash
-sudo cat /etc/wireguard/server_private.key
+cat /etc/wireguard/server_private.key   # paste into wg0.conf
+cat /etc/wireguard/server_public.key    # give to each VPN client
 ```
 
 ### Step 3: Create the server configuration
@@ -112,11 +94,34 @@ sudo sysctl --system
 
 ### Step 5: Allow WireGuard through the Azure NSG
 
-In the Azure portal for the VM, add or confirm these inbound rules:
+1. Go to your virtual machine in the Azure portal.
+2. In the left menu under **Settings**, click **Networking**.
+3. Click **Add inbound security rule**.
 
-1. Allow WireGuard:
-   source `Any`, destination port `51820`, protocol `UDP`, action `Allow`
-2. Restrict SSH to the approved source IP ranges
+Add the following two rules:
+
+**WireGuard rule**
+
+| Field | Value |
+|---|---|
+| Source | Any |
+| Source port ranges | * |
+| Destination | Any |
+| Service | Custom |
+| Destination port ranges | 51820 |
+| Protocol | UDP |
+| Action | Allow |
+| Priority | 310 |
+| Name | AllowWireguard |
+
+**SSH rule** (should already exist — edit it to restrict the source)
+
+| Field | Value |
+|---|---|
+| Source | IP Addresses |
+| Source IP addresses/CIDR ranges | Your company's allowed IP addresses |
+| Destination | Any |
+| Protocol | TCP |
 
 ### Step 6: Start WireGuard and enable it at boot
 
@@ -138,9 +143,27 @@ If `wg0.conf` changes later, restart the service:
 sudo systemctl restart wg-quick@wg0
 ```
 
-### Step 7: Configure a client
+### Step 7: Configure a client (Windows)
 
-Use a client configuration like this:
+#### 1. Install WireGuard
+
+Download and install WireGuard for Windows from the official installer at [wireguard.com/install](https://www.wireguard.com/install/).
+
+#### 2. Create a tunnel and generate keys
+
+1. Open the WireGuard app.
+2. Click **Add Tunnel** → **Add empty tunnel**.
+3. The app generates a private key and public key automatically. The private key is filled in for you — do not share it.
+4. Copy the **public key** that appears at the top of the tunnel editor.
+5. Send the public key to the server administrator so they can add it as a `[Peer]` block in `/etc/wireguard/wg0.conf` on the VM.
+
+!!! note "Wait for confirmation"
+    Do not activate the tunnel until the administrator confirms your public key
+    has been added to the server and WireGuard has been restarted.
+
+#### 3. Configure the tunnel
+
+In the tunnel editor, replace the contents with the following and fill in the placeholders:
 
 ```ini
 [Interface]
@@ -155,25 +178,32 @@ AllowedIPs = 10.55.55.0/24
 PersistentKeepalive = 25
 ```
 
-`AllowedIPs = 10.55.55.0/24` is split tunnel mode and routes only the VPN
-subnet through WireGuard.
+- Replace `10.55.55.2` with your assigned client VPN IP.
+- `<SERVER_PUBLIC_KEY>` is the contents of `/etc/wireguard/server_public.key` on the VM.
+- `<VM_PUBLIC_IP>` can be found on the **Overview** page of the VM in the Azure portal.
+- `AllowedIPs = 10.55.55.0/24` is split-tunnel mode — only traffic destined for the VPN subnet routes through WireGuard.
+
+Click **Save**.
+
+#### 4. Activate the tunnel
+
+Click **Activate** in the WireGuard app. The status should change to **Active**.
 
 ### Step 8: Validate the connection
 
-From the client device:
+From the client device, open a terminal and ping the VPN gateway:
 
 ```bash
 ping 10.55.55.1
 ```
 
-From the Ubuntu VM:
+From the Ubuntu VM, confirm the client handshake:
 
 ```bash
 sudo wg show
 ```
 
-The VM should show a recent handshake for the client peer after the tunnel
-comes up.
+The VM should show a recent handshake for the client peer after the tunnel comes up.
 
 ### Step 9: Optional full-tunnel mode
 

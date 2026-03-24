@@ -7,8 +7,7 @@ tools during a conversation.
 
 ## URL
 
-- OpenWebUI: `http://10.55.55.1:3000`
-- LiteLLM API used by OpenWebUI: `http://10.55.55.1:4000/v1`
+`http://10.55.55.1:3000`
 
 ## Run Location
 
@@ -57,7 +56,45 @@ docker run -d \
 2. Complete the first-run signup flow.
 3. Use that first account as the OpenWebUI admin account.
 
-### Step 3: Validate the container
+### Step 3: Create additional user accounts
+
+After the admin account exists, additional users can be created through the admin panel:
+
+1. Sign in as the admin.
+2. Open **Admin Panel**.
+3. Go to **Users**.
+4. Create additional accounts as needed.
+
+All accounts and settings persist in the `open-webui` Docker volume, so they survive container restarts and recreations.
+
+### Step 3a: Optional — run without accounts
+
+If you want an open instance with no login requirement, stop and remove the current container:
+
+```bash
+docker rm -f open-webui
+```
+
+Then re-run with `WEBUI_AUTH=False`:
+
+```bash
+docker run -d \
+  --name open-webui \
+  --restart unless-stopped \
+  -p 10.55.55.1:3000:8080 \
+  -e WEBUI_AUTH=False \
+  -e OPENAI_API_BASE_URL="http://10.55.55.1:4000/v1" \
+  -e OPENAI_API_KEY="dummy" \
+  -v open-webui:/app/backend/data \
+  ghcr.io/open-webui/open-webui:main
+```
+
+!!! note "No-auth mode"
+    In no-auth mode anyone who can reach `http://10.55.55.1:3000` over WireGuard
+    can use the instance without signing in. This is only appropriate if all
+    WireGuard clients are trusted.
+
+### Step 4: Validate the container
 
 ```bash
 curl -I http://10.55.55.1:3000

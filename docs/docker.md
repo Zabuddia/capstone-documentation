@@ -13,8 +13,6 @@ Ubuntu VM.
 
 - The [Ubuntu VM](ubuntu-virtual-machine.md#ubuntu-virtual-machine) is created
   and reachable over SSH
-- The VM user has `sudo` access
-- The Ubuntu package repositories are reachable from the VM
 
 ## Context
 

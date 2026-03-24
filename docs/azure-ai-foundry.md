@@ -7,9 +7,7 @@ LiteLLM and the RAG website.
 
 ## URL
 
-- Azure portal: `https://portal.azure.us/`
-- Project endpoint: created during setup. Format:
-  `https://<azure-openai-endpoint>.openai.azure.us/`
+Project endpoint: `https://<azure-openai-endpoint>.openai.azure.us/`
 
 ## Run Location
 
@@ -64,10 +62,19 @@ endpoint, deployment name, and API key from this setup.
 1. In the project workspace, open **Models + Endpoints**.
 2. Select **+ Deploy model**.
 3. Choose the Azure OpenAI model that will be used later, such as `gpt-4o`.
+   This is the **Model name** — the actual underlying model provided by Azure.
 4. Enter a deployment name, such as `gpt-4o-virginia`.
+   This is the **Deployment name** — a label you choose to identify this
+   specific deployment. It can be anything, but something descriptive like
+   `gpt-4o-virginia` makes it easier to manage multiple deployments.
 5. Select the deployment type required for the environment.
 6. Adjust the Tokens Per Minute setting if needed.
 7. Create the deployment.
+
+!!! note "Model name vs. Deployment name"
+    These two values are used separately in LiteLLM's `config.yaml`:
+    the **Deployment name** goes into `model: azure/<deployment-name>`, and the
+    **Model name** goes into `base_model`. Both are recorded in Step 4 below.
 
 !!! note "Deprecated models"
     Some models listed in the catalog cannot be deployed because they have been
@@ -80,10 +87,11 @@ endpoint, deployment name, and API key from this setup.
 
 1. Open the project in Azure AI Foundry. If the hub page opens instead of the
    project, click **Go to project** to enter the project workspace.
-2. Go to the **Overview** page.
-3. Copy the **Project endpoint**.
-4. Copy one of the available **API keys**.
-5. Record the model deployment name from **Models + Endpoints**.
+2. Go to the **Models + Endpoints** page.
+3. Click **Get endpoint**.
+4. Copy the **Azure AI model inference endpoint**.
+5. Copy the **Key**.
+6. Record the **Model name**.
 
 ## What You Just Set Up
 

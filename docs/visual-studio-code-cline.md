@@ -5,12 +5,6 @@
 Use Visual Studio Code with the Cline extension to connect to LiteLLM and the
 MCP server from a local development workstation.
 
-## URL
-
-- Visual Studio Code download: `https://code.visualstudio.com/`
-- LiteLLM endpoint: `http://10.55.55.1:4000`
-- MCP endpoint: `http://10.55.55.1:8000/mcp`
-
 ## Run Location
 
 Local workstation.
@@ -73,9 +67,17 @@ alias exposed by LiteLLM, such as `gpt-4o`.
 
 ### Step 5: Confirm the connections
 
+**Verify the model is connected:**
+
 1. Open a new Cline chat.
-2. Confirm that the LiteLLM model alias appears in the model selection.
-3. Confirm that the MCP server tools are available in the chat UI.
+2. Check the bottom bar of the Cline panel — the model name (e.g., `openai-compat:gpt-4o`) should appear there.
+3. Type a short message and send it. If the model responds, LiteLLM is connected correctly.
+
+**Verify the MCP server is connected:**
+
+1. Open **MCP Servers** in the Cline panel. ![Cline MCP servers icon](images/cline-mcp.png)
+2. Go to the **Configure** tab.
+3. Find the MCP server entry (e.g., `Azure MCP`) and confirm it has a **green dot** on the right side, indicating it is connected and running.
 
 ## What You Just Set Up
 

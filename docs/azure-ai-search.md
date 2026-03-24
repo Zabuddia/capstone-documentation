@@ -7,9 +7,7 @@ used by the RAG workflow.
 
 ## URL
 
-- Azure portal: `https://portal.azure.us/`
-- Service endpoint: created during setup. Format:
-  `https://<search-service-name>.search.azure.us`
+Service endpoint:  `https://<search-service-name>.search.azure.us`
 
 ## Run Location
 
@@ -41,10 +39,11 @@ this page are used again in later setup steps.
       sufficient in most cases. Higher tiers (S, S2, S3, etc.) are available
       if needed.
 
-!!! note "Free tier limit"
-    Azure only allows one Free tier search service per subscription. If you
-    already have one, creating another will fail with an error — choose
-    **Basic** instead.
+    !!! note "Free tier limit"
+        Azure only allows one Free tier search service per subscription. If you
+        already have one, creating another will fail with an error — choose
+        **Basic** instead.
+
 4. Review the configuration and create the service.
 
 ### Step 2: Locate the endpoint and admin key

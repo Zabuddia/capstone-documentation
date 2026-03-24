@@ -60,11 +60,25 @@ Edit the application configuration:
 nano ~/rag-website/config/config.yaml
 ```
 
-Replace the placeholder values for:
+```yaml
+search_config:
+  endpoint: "https://<search-service-name>.search.azure.us"
+  api_key: AZURE_SEARCH_KEY
 
-- The Azure AI Search endpoint
-- The Azure OpenAI endpoint
-- The embedding deployment name
+embedding:
+  endpoint: "https://<azure-openai-endpoint>.openai.azure.us/"
+  api_key: AZURE_LLM_API_KEY
+  api_version: "2024-02-01"
+  model: "<embedding-deployment-name>"
+```
+
+- `search_config.endpoint` — the **Service endpoint** from
+  [Azure AI Search Step 2](azure-ai-search.md#step-2-locate-the-endpoint-and-admin-key)
+  (`https://<search-service-name>.search.azure.us`)
+- `embedding.endpoint` — the **Azure AI model inference endpoint** from
+  [Azure AI Foundry Step 4](azure-ai-foundry.md#step-4-locate-endpoints-and-keys)
+- `embedding.model` — the **Deployment name** of your embedding model from
+  [Azure AI Foundry Step 3](azure-ai-foundry.md#step-3-deploy-an-ai-model)
 
 Edit the systemd unit file:
 
@@ -72,11 +86,12 @@ Edit the systemd unit file:
 nano ~/rag-website/deploy/rag-website.service
 ```
 
-Replace the placeholders for:
-
-- `<VM_USER_NAME>`
-- `<AZURE_AI_SEARCH_API_KEY>`
-- `<AZURE_OPENAI_API_KEY>`
+- `<VM_USER_NAME>` — the username on the Ubuntu VM (set during
+  [VM creation](ubuntu-virtual-machine.md#step-1-create-the-azure-vm))
+- `<AZURE_AI_SEARCH_API_KEY>` — the **Admin key** from
+  [Azure AI Search](azure-ai-search.md#step-2-locate-the-endpoint-and-admin-key)
+- `<AZURE_OPENAI_API_KEY>` — the **Key** from
+  [Azure AI Foundry Step 4](azure-ai-foundry.md#step-4-locate-endpoints-and-keys)
 
 ### Step 5: Create the Python virtual environment and install dependencies
 

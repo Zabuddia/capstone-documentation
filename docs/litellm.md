@@ -26,9 +26,7 @@ Ubuntu VM.
 ## Context
 
 LiteLLM gives the rest of the stack a single OpenAI-compatible endpoint. In the
-example below, the Azure deployment is exposed as `gpt-4o`. If traffic later
-needs to be spread across multiple Azure deployments, additional entries can be
-added to `config.yaml` with the same `model_name`.
+example below, the Azure deployment is exposed as `gpt-4o`.
 
 ## Steps
 
@@ -50,6 +48,13 @@ nano ~/lite-llm/config.yaml
 
 Paste the following configuration and replace the placeholders:
 
+- `<deployment-name>` — the name you gave the deployment in Azure AI Foundry
+  (e.g. `gpt-4o-virginia`). This is set in
+  [Step 3 of Azure AI Foundry](azure-ai-foundry.md#step-3-deploy-an-ai-model).
+- `<base-model-name>` — the underlying Azure OpenAI model name (e.g. `gpt-4o`).
+  This is the **Model name** shown in
+  [Step 4 of Azure AI Foundry](azure-ai-foundry.md#step-4-locate-endpoints-and-keys).
+
 ```yaml
 model_list:
   - model_name: gpt-4o
@@ -65,11 +70,22 @@ litellm_settings:
   rate_limiter: local
 ```
 
+!!! note "Adding more deployments"
+    If traffic later needs to be spread across multiple Azure deployments,
+    additional entries can be added to `config.yaml` with the same
+    `model_name`.
+
 ### Step 3: Run LiteLLM in Docker
 
 ```bash
 cd ~/lite-llm
 ```
+
+Both values come from
+[Step 4 of Azure AI Foundry](azure-ai-foundry.md#step-4-locate-endpoints-and-keys):
+
+- `AZURE_API_BASE` — the **Azure AI model inference endpoint**
+- `AZURE_LLM_API_KEY` — the **Key**
 
 ```bash
 docker run -d \

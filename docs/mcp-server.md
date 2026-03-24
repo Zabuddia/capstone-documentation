@@ -61,10 +61,15 @@ Edit the Python configuration:
 nano ~/mcp-server/config.py
 ```
 
-Replace the placeholders for:
+```python
+AZURE_SEARCH_ENDPOINT = "https://<search-service-name>.search.azure.us"
+AZURE_SEARCH_API_KEY = "<AZURE_AI_SEARCH_API_KEY>"
+```
 
-- `AZURE_SEARCH_ENDPOINT`
-- `AZURE_SEARCH_API_KEY`
+- `AZURE_SEARCH_ENDPOINT` — the **Service endpoint** from
+  [Azure AI Search Step 2](azure-ai-search.md#step-2-locate-the-endpoint-and-admin-key)
+- `AZURE_SEARCH_API_KEY` — the **Admin key** from
+  [Azure AI Search Step 2](azure-ai-search.md#step-2-locate-the-endpoint-and-admin-key)
 
 Edit the service files:
 
@@ -76,9 +81,8 @@ nano ~/mcp-server/deploy/mcp-server.service
 nano ~/mcp-server/deploy/mcpo.service
 ```
 
-Replace the placeholder for:
-
-- `<VM_USER_NAME>`
+- `<VM_USER_NAME>` — the username on the Ubuntu VM (set during
+  [VM creation](ubuntu-virtual-machine.md#step-1-create-the-azure-vm))
 
 ### Step 5: Create the Python virtual environment and install dependencies
 

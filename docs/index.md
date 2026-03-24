@@ -1,15 +1,7 @@
 # Capstone Documentation
 
-This site documents the recommended order for building the full environment:
-Azure AI Foundry and Azure AI Search in Azure, an Ubuntu VM to host the
-services, WireGuard for private access, Docker for containerized apps,
-LiteLLM for a shared model endpoint, the RAG website for index management,
-the MCP server for tool access, and OpenWebUI or Cline as the user-facing
-clients.
-
 If you are building the stack from scratch, follow the pages in the
-**Build Order** section of the left navigation. The bottom of each page now
-includes previous/next arrows so you can continue without returning here.
+**Build Order** section of the left navigation.
 
 ## Architecture Overview
 

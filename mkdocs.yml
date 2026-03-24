@@ -59,5 +59,6 @@ nav:
       - OpenWebUI: openwebui.md
       - Visual Studio Code (Cline): visual-studio-code-cline.md
   - Reference:
+      - Key Terms: key-terms.md
       - Web Browser: web-browser.md
       - Azure API: azure-api.md
