@@ -26,6 +26,8 @@ Basic instructions for running this docs site with MkDocs.
 
 - Python
 - `pip`
+- Node.js / `npx`
+- Chromium or Google Chrome
 
 ## Setup
 
@@ -33,7 +35,7 @@ Basic instructions for running this docs site with MkDocs.
 python -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
-pip install mkdocs mkdocs-material
+pip install mkdocs mkdocs-material beautifulsoup4
 ```
 
 ## Run Locally
@@ -52,7 +54,19 @@ mkdocs build
 
 Build output goes to `site/`.
 
+## Build PDF
+
+After changing any file in `docs/` or `mkdocs.yml`, run:
+
+```bash
+./scripts/build_pdf.sh
+```
+
+The generated PDF is written to `pdf/capstone-documentation.pdf`.
+
 ## Project Structure
 
 - `mkdocs.yml`: MkDocs configuration and navigation
 - `docs/`: Markdown source files for the documentation
+- `scripts/build_pdf.sh`: rebuilds the PDF export
+- `pdf/capstone-documentation.pdf`: committed PDF output

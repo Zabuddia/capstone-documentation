@@ -1,5 +1,6 @@
 # MkDocs build output
 site/
+.pdf-build/
 # Python cache/bytecode
 __pycache__/
 *.py[cod]

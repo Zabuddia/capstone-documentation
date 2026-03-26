@@ -1,0 +1,78 @@
+@page {
+  margin: 0.55in 0.65in 0.75in;
+  size: letter;
+
+  @top-left {
+    color: #5d6780;
+    content: "Capstone Documentation";
+    font-size: 9pt;
+    font-weight: 700;
+  }
+
+  @top-right {
+    color: #5d6780;
+    content: string(chapter);
+    font-size: 9pt;
+  }
+
+  @bottom-right {
+    color: #5d6780;
+    content: counter(page);
+    font-size: 9pt;
+  }
+}
+
+@page cover {
+  @top-left {
+    content: none;
+  }
+
+  @top-right {
+    content: none;
+  }
+
+  @bottom-right {
+    content: none;
+  }
+}
+
+body {
+  background: #fff;
+}
+
+.cover {
+  page: cover;
+}
+
+.cover,
+.book-toc,
+.doc-page + .doc-page {
+  break-before: page;
+}
+
+.book-toc a::after {
+  color: #5d6780;
+  content: target-counter(attr(href), page);
+  float: right;
+}
+
+.doc-page h1 {
+  string-set: chapter content(text);
+}
+
+#page-index #index--architecture-diagram {
+  break-before: page;
+}
+
+#page-index #index--architecture-diagram + .architecture-diagram-shell {
+  break-after: page;
+}
+
+.doc-page h2,
+.doc-page h3,
+.doc-page h4,
+.doc-page pre,
+.doc-page table,
+.doc-page .admonition {
+  break-inside: avoid;
+}
