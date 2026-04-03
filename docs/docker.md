@@ -5,19 +5,27 @@
 Install Docker Engine and Docker Compose on the Ubuntu VM so the containerized
 parts of the stack can run and restart automatically.
 
+---
+
 ## Run Location
 
 Ubuntu VM.
+
+---
 
 ## Before You Start
 
 - The [Ubuntu VM](ubuntu-virtual-machine.md#ubuntu-virtual-machine) is created
   and reachable over SSH
 
+---
+
 ## Context
 
 LiteLLM and OpenWebUI run in Docker containers in this project. The Python
 applications use virtual environments and systemd instead.
+
+---
 
 ## Steps
 
@@ -95,6 +103,8 @@ docker compose version
 ```bash
 docker ps
 ```
+
+---
 
 ## What You Just Set Up
 

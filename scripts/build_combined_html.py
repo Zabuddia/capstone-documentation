@@ -328,6 +328,12 @@ def main() -> int:
     parser.add_argument("--config", default="mkdocs.yml")
     parser.add_argument("--site-dir", default="site")
     parser.add_argument("--output-dir", default=".pdf-build/html")
+    parser.add_argument("--nav-sections", nargs="*", default=None,
+                        help="Top-level nav section names to include. Omit to include all.")
+    parser.add_argument("--title", default=None,
+                        help="Override the cover page title (defaults to site_name in mkdocs.yml).")
+    parser.add_argument("--description", default=None,
+                        help="Override the cover page description (defaults to site_description in mkdocs.yml).")
     args = parser.parse_args()
 
     repo_root = Path.cwd()
@@ -343,6 +349,14 @@ def main() -> int:
         config = yaml.safe_load(handle)
 
     pages = flatten_nav(config["nav"], site_dir)
+
+    if args.nav_sections:
+        allowed = set(args.nav_sections)
+        pages = [
+            p for p in pages
+            if (p.groups and p.groups[0] in allowed) or (not p.groups and p.title in allowed)
+        ]
+
     page_dirs, page_files = make_page_lookup(pages)
     page_articles: dict[str, BeautifulSoup] = {}
 
@@ -366,8 +380,10 @@ def main() -> int:
         collect_toc_entries(article_root, page)
         sections.append(page_markup(page, article_root))
 
+    title = args.title or config["site_name"]
+    description = args.description or config.get("site_description", "")
     copy_styles(repo_root, html_dir)
-    build_paged_variant(config["site_name"], config.get("site_description", ""), pages, sections, html_dir)
+    build_paged_variant(title, description, pages, sections, html_dir)
     return 0
 
 

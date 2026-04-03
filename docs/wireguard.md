@@ -5,10 +5,14 @@
 Configure the Ubuntu VM as a WireGuard VPN gateway so the internal services can
 be reached over the private address `10.55.55.1`.
 
+---
+
 ## Run Location
 
 Ubuntu VM unless a step explicitly says to use the Azure portal or a client
 device.
+
+---
 
 ## Before You Start
 
@@ -16,11 +20,15 @@ device.
   and reachable over SSH
 - The VM public IP is available
 
+---
+
 ## Context
 
 The WireGuard tunnel uses the subnet `10.55.55.0/24`. The VM listens as
 `10.55.55.1`, and the rest of the documentation assumes the private services
 are reached through that address instead of the public internet.
+
+---
 
 ## Steps
 
@@ -215,6 +223,8 @@ AllowedIPs = 0.0.0.0/0
 ```
 
 Keep IPv4 forwarding and the NAT rules enabled if full-tunnel mode is used.
+
+---
 
 ## What You Just Set Up
 

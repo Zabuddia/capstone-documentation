@@ -5,14 +5,20 @@
 Run the web chat interface that connects to LiteLLM and can optionally use MCP
 tools during a conversation.
 
+---
+
 ## URL
 
 `http://10.55.55.1:3000`
+
+---
 
 ## Run Location
 
 Ubuntu VM for Docker commands and a browser on a WireGuard-connected client for
 the web interface.
+
+---
 
 ## Before You Start
 
@@ -22,12 +28,16 @@ the web interface.
 - [MCP Server](mcp-server.md#mcp-server) is optional but recommended if tool
   access is needed
 
+---
+
 ## Context
 
 OpenWebUI stores users, chats, and settings in a Docker volume named
 `open-webui`. The first account created becomes the admin account. When the MCP
 tool server is enabled for a chat, those tools become available to the model in
 that conversation, but the model is not forced to use them.
+
+---
 
 ## Steps
 
@@ -132,6 +142,8 @@ docker volume rm open-webui
 ```
 
 Run the `docker run` command again after removing the container.
+
+---
 
 ## What You Just Set Up
 

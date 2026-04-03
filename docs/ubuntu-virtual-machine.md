@@ -10,20 +10,28 @@ Create the Ubuntu VM that hosts the private application stack:
 - RAG Website
 - MCP Server
 
+---
+
 ## Run Location
 
 Azure portal for VM creation, a local machine for SSH and `scp`, and the Ubuntu
 VM for package installation.
 
+---
+
 ## Before You Start
 
 - An Azure Government subscription and resource group
+
+---
 
 ## Context
 
 This VM is the host for the rest of the stack. Later pages assume the working
 directories live under `/home/<VM_USER_NAME>/` and that internal services are
 reached over WireGuard at `10.55.55.1`.
+
+---
 
 ## Steps
 
@@ -99,6 +107,8 @@ On the Ubuntu VM, extract the uploaded file:
 ```bash
 tar -xzf ~/rag-website.tar.gz -C ~/
 ```
+
+---
 
 ## What You Just Set Up
 

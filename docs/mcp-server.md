@@ -5,17 +5,23 @@
 Run the MCP service that exposes Azure AI Search indexes as tools for clients
 such as Cline and OpenWebUI.
 
+---
+
 ## URL
 
 - MCP endpoint: `http://10.55.55.1:8000/mcp`
 - MCPO OpenAPI proxy: `http://10.55.55.1:8001`
 - MCPO docs: `http://10.55.55.1:8001/docs`
 
+---
+
 ## Run Location
 
 Local machine for downloading and uploading the starter bundle, Ubuntu VM for
 installation and configuration, and a browser on a WireGuard-connected client
 for viewing the OpenAPI docs.
+
+---
 
 ## Before You Start
 
@@ -24,12 +30,16 @@ for viewing the OpenAPI docs.
 - [WireGuard](wireguard.md#wireguard) is working
 - The [RAG Website](rag-website.md#rag-website) has created at least one index
 
+---
+
 ## Context
 
 The starter bundle expands into `~/mcp-server`. It includes the Python service,
 the MCPO bridge, and the two systemd units needed to run them at boot. After
 extracting it, edit `config.py`, `deploy/mcp-server.service`, and
 `deploy/mcpo.service`.
+
+---
 
 ## Steps
 
@@ -155,6 +165,8 @@ curl -I http://10.55.55.1:8001/openapi.json
 Open the docs from a client connected over WireGuard:
 
 - `http://10.55.55.1:8001/docs`
+
+---
 
 ## What You Just Set Up
 

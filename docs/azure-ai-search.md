@@ -5,13 +5,19 @@
 Create the Azure AI Search service that stores the vectorized document chunks
 used by the RAG workflow.
 
+---
+
 ## URL
 
 Service endpoint:  `https://<search-service-name>.search.azure.us`
 
+---
+
 ## Run Location
 
 Azure portal.
+
+---
 
 ## Before You Start
 
@@ -19,11 +25,15 @@ Azure portal.
 - A resource group in the target region
 - A decision on the pricing tier needed for the project
 
+---
+
 ## Context
 
 The RAG website uploads content and embeddings to Azure AI Search, and the MCP
 server later queries those indexes. The endpoint URL and admin API key from
 this page are used again in later setup steps.
+
+---
 
 ## Steps
 
@@ -52,6 +62,8 @@ this page are used again in later setup steps.
 2. Copy the **URL** shown on the overview page.
 3. Open **Keys** in the left navigation.
 4. Copy one of the **Admin keys**.
+
+---
 
 ## What You Just Set Up
 

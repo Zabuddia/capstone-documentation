@@ -5,15 +5,21 @@
 Run the Flask application that manages Azure AI Search indexes, uploads PDFs,
 and scrapes websites for RAG content.
 
+---
+
 ## URL
 
 `http://10.55.55.1:7000`
+
+---
 
 ## Run Location
 
 Local machine for downloading and uploading the starter bundle, Ubuntu VM for
 installation and configuration, and a browser on a WireGuard-connected client
 for validation.
+
+---
 
 ## Before You Start
 
@@ -23,12 +29,16 @@ for validation.
 - The [Ubuntu VM](ubuntu-virtual-machine.md#ubuntu-virtual-machine) is ready
 - Python 3 and virtual environment support are installed on the VM
 
+---
+
 ## Context
 
 The starter bundle expands into `~/rag-website`. It includes the application
 code, templates, configuration files, and a systemd unit file. After
 extracting it, edit `config/config.yaml` and `deploy/rag-website.service` to
 match the environment.
+
+---
 
 ## Steps
 
@@ -152,6 +162,8 @@ curl -I http://10.55.55.1:7000
 Open the site from a client connected over WireGuard:
 
 - `http://10.55.55.1:7000`
+
+---
 
 ## What You Just Set Up
 

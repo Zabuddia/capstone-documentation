@@ -5,13 +5,19 @@
 Create the Azure AI Foundry resources and model deployment used later by
 LiteLLM and the RAG website.
 
+---
+
 ## URL
 
 Project endpoint: `https://<azure-openai-endpoint>.openai.azure.us/`
 
+---
+
 ## Run Location
 
 Azure portal.
+
+---
 
 ## Before You Start
 
@@ -19,11 +25,15 @@ Azure portal.
 - A resource group in the target region
 - Available model quota in the region where the deployment will run
 
+---
+
 ## Context
 
 This page creates three things: an Azure AI Foundry hub, a project attached to
 that hub, and at least one deployed model. Later pages use the project
 endpoint, deployment name, and API key from this setup.
+
+---
 
 ## Steps
 
@@ -92,6 +102,8 @@ endpoint, deployment name, and API key from this setup.
 4. Copy the **Azure AI model inference endpoint**.
 5. Copy the **Key**.
 6. Record the **Model name**.
+
+---
 
 ## What You Just Set Up
 

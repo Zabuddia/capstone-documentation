@@ -5,14 +5,20 @@
 Run an OpenAI-compatible API on the Ubuntu VM so OpenWebUI and Cline can use an
 Azure OpenAI deployment through a single endpoint.
 
+---
+
 ## URL
 
 - LiteLLM API: `http://10.55.55.1:4000`
 - Model list endpoint: `http://10.55.55.1:4000/v1/models`
 
+---
+
 ## Run Location
 
 Ubuntu VM.
+
+---
 
 ## Before You Start
 
@@ -23,10 +29,14 @@ Ubuntu VM.
 - [WireGuard](wireguard.md#wireguard) is in place so clients can reach
   `10.55.55.1`
 
+---
+
 ## Context
 
 LiteLLM gives the rest of the stack a single OpenAI-compatible endpoint. In the
 example below, the Azure deployment is exposed as `gpt-4o`.
+
+---
 
 ## Steps
 
@@ -131,6 +141,8 @@ docker rm -f litellm
 ```
 
 Run the `docker run` command again after removing the container.
+
+---
 
 ## What You Just Set Up
 
