@@ -1,104 +1,79 @@
-# OpenWebUI User Guide
+# Open WebUI User Guide
 
-## Overview
-
-OpenWebUI is a web-based chat interface for interacting with AI language models. It provides a clean, conversation-style UI similar to commercial AI chat products, but connected to your internal model infrastructure via LiteLLM. This guide covers everyday usage after OpenWebUI has been deployed.
+Welcome to the Open WebUI! This step-by-step guide will walk you through the basics of navigating the interface, selecting models, starting your first chat, and using the built-in workspace tools.
 
 ---
 
-## Prerequisites
+### Access the WebUI
+To get started, open your preferred web browser and navigate to the following address:
+* **URL:** `http://10.55.55.1:3000`
 
-- OpenWebUI is running and accessible on your network (see the Setup Guide)
-- You have a user account (or the admin has enabled open registration)
-- At least one model is configured and available through LiteLLM
-
----
-
-## Logging In
-
-1. Open a web browser and navigate to the OpenWebUI URL provided by your administrator.
-2. Enter your username/email and password, then click **Sign In**.
-3. If this is your first visit and registration is open, click **Register** to create an account.
+![Landing Page](images/Landing_Page.png)
 
 ---
 
-## Starting a New Conversation
+### Choose Your LLM Model
+Before you start chatting, you need to select the AI model you want to use.
 
-1. Click **New Chat** in the left sidebar (or the pencil/compose icon).
-2. Select a model from the model picker at the top of the chat window.
-3. Type your message in the input box at the bottom and press **Enter** or click the send button.
+1. Look at the top-left corner of the screen.
+2. Click on the model dropdown menu (indicated by the red box in the image below).
+3. Select your desired model (e.g., `gpt-4o`) from the list.
 
----
+> **Tip:** You can click "Set as default" right below the model name so you don't have to choose it every time you log in.
 
-## Selecting a Model
-
-The model picker dropdown at the top of the chat window lists all models available through your LiteLLM configuration. Different models have different strengths:
-
-- **Larger models** — better reasoning and longer context, slower responses
-- **Smaller/faster models** — quicker replies, good for simple tasks
-
-You can switch models mid-conversation; the new model will apply to all subsequent messages in that chat.
+![Select LLM Model](images/Change_LLM.png)
 
 ---
 
-## Conversation Features
+### Enter Your Prompt
+Once your model is selected, you are ready to start generating responses.
 
-### Editing Messages
+1. Locate the main chat box at the bottom of the screen.
+2. Type your question, instructions, or prompt into this field.
+3. Press **Enter** or click the send button to submit your prompt.
 
-Click the **pencil icon** next to any of your previous messages to edit and resend it. This will regenerate the AI's response from that point forward.
-
-### Regenerating a Response
-
-Click the **regenerate icon** below the AI's last message to get a new response to the same prompt. Useful when the first response isn't quite what you needed.
-
-### Copying Responses
-
-Click the **copy icon** below any response to copy the full text to your clipboard.
+![Enter Prompt](images/Prompt.png)
 
 ---
 
-## Managing Conversations
+###Include Files, Links, and More
 
-### Viewing Chat History
+If you need the AI to analyze a specific document, image, or website, you can easily attach it to your prompt.
 
-Previous conversations appear in the left sidebar, sorted by most recent. Click any conversation to open it.
+1. Click the **`+`** icon located on the left side of the chat input box.
+2. A menu will appear with several options, including **Upload Files**, **Capture**, **Attach Webpage**, and more. 
+3. Select the appropriate option and choose the file or link you want to include.
 
-### Renaming a Conversation
-
-Right-click a conversation in the sidebar and select **Rename**, or click the three-dot menu next to it. Give it a descriptive name so you can find it later.
-
-### Deleting a Conversation
-
-Right-click a conversation in the sidebar and select **Delete**, or use the three-dot menu. Deleted conversations cannot be recovered.
+![Add Files Menu](images/Add_Files.png)
 
 ---
 
-## Uploading Files
+### Access Old Chats or Create a New One
+Open WebUI automatically saves your previous conversations so you can pick up right where you left off.
 
-Some model configurations support file uploads (documents, images). To upload a file:
+1. To open the sidebar, click the **OI** logo in the top-left corner of the screen.
+2. The sidebar will slide out. From here, you can click **New Chat** at the top to start a fresh conversation.
+3. To resume an old chat, browse your **Previous 7 days** or **Previous 30 days** history in the lower section of the menu.
 
-1. Click the **paperclip** or **attachment** icon in the message input area.
-2. Select a file from your computer.
-3. Type your question or instruction and send.
-
-!!! note
-    File upload support depends on the model and configuration. If the attachment icon is not visible, file uploads are not enabled for the current model.
-
----
-
-## Settings and Customization
-
-Click your username or avatar in the bottom-left corner to access settings:
-
-- **Theme** — Switch between light and dark mode.
-- **Default Model** — Set which model is selected when opening a new chat.
-- **System Prompt** — Add a default system-level instruction that applies to all new conversations (e.g., "Always respond in plain language").
+<p align="center">
+  <img src="../images/Side_Menu.png" alt="Open Side Menu" width="45%" />
+  <img src="../images/Past_Chats.png" alt="Past Chats" width="45%" />
+</p>
 
 ---
 
-## Tips
+### Explore Additional Actions & Notes
+The side menu also gives you access to a suite of other helpful workspace tools:
 
-- Give context upfront — the more background you provide, the more useful the response.
-- For long or complex tasks, break them into multiple messages rather than sending everything at once.
-- Use the conversation history to continue work across sessions rather than starting fresh each time.
-- If a response is cut off, send "Continue" as your next message to prompt the model to keep going.
+1. **Actions:** The upper section of the side menu contains quick links for **Search**, **Notes**, and your broader **Workspace**.
+2. **Notes:** Clicking on "Notes" opens a dedicated interface where you can create, organize, and format your own documentation or save important AI outputs alongside your chats.
+
+![Menu Actions](images/Functions.png)
+
+<p align="center">
+  <img src="../images/Notes.png" alt="Notes Dashboard" width="45%" />
+  <img src="../images/Writing_Notes.png" alt="Writing a Note" width="45%" />
+</p>
+
+---
+*If you run into any issues or need further assistance, please reach out to the system administrator.*
