@@ -1,12 +1,74 @@
 # Capstone Documentation
 
-## Add a New Documentation Page
+This repository contains the MkDocs source for the Capstone documentation site and the generated PDF guides.
 
-1. Create a new Markdown file in `docs/`:
+## Setup
 
-2. Add your content to that file (start with a heading, for example `# New Page`).
+Prerequisites:
 
-3. Add the page to `nav` in `mkdocs.yml`:
+- Python 3
+- Node.js and `npm`
+
+Set up the Python environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r pdf/requirements.txt
+```
+
+Install the pinned PDF build dependency:
+
+```bash
+npm ci
+```
+
+## Common Commands
+
+Activate the virtual environment before running these commands:
+
+```bash
+source .venv/bin/activate
+```
+
+Run the docs site locally:
+
+```bash
+mkdocs serve
+```
+
+Build the static site:
+
+```bash
+mkdocs build
+```
+
+The static site output is written to `site/`.
+
+Build the PDF guides:
+
+```bash
+./scripts/build_pdf.sh
+```
+
+PDF build prerequisites:
+
+- Chromium, `chromium-browser`, or Google Chrome
+
+Generated PDFs:
+
+- `pdf/setup-guide.pdf`
+- `pdf/user-guide.pdf`
+
+## Adding or Updating Pages
+
+1. Create or edit Markdown files in `docs/`.
+2. Add new pages to the `nav` section in `mkdocs.yml`.
+3. Run `mkdocs serve` to review changes locally.
+4. Run `./scripts/build_pdf.sh` if the PDF guides should be refreshed.
+
+Example `mkdocs.yml` navigation entry:
 
 ```yaml
 nav:
@@ -14,59 +76,18 @@ nav:
   - New Page: new-page.md
 ```
 
-4. Run locally and verify:
-
-```bash
-mkdocs serve
-```
-
-Basic instructions for running this docs site with MkDocs.
-
-## Prerequisites
-
-- Python
-- `pip`
-- Node.js / `npx`
-- Chromium or Google Chrome
-
-## Setup
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip
-pip install mkdocs mkdocs-material beautifulsoup4
-```
-
-## Run Locally
-
-```bash
-mkdocs serve
-```
-
-Then open: `http://127.0.0.1:8000`
-
-## Build Static Site
-
-```bash
-mkdocs build
-```
-
-Build output goes to `site/`.
-
-## Build PDF
-
-After changing any file in `docs/` or `mkdocs.yml`, run:
-
-```bash
-./scripts/build_pdf.sh
-```
-
-The generated PDF is written to `pdf/capstone-documentation.pdf`.
-
 ## Project Structure
 
-- `mkdocs.yml`: MkDocs configuration and navigation
-- `docs/`: Markdown source files for the documentation
-- `scripts/build_pdf.sh`: rebuilds the PDF export
-- `pdf/capstone-documentation.pdf`: committed PDF output
+- `mkdocs.yml`: MkDocs site configuration and navigation
+- `docs/`: Markdown source files
+- `scripts/build_pdf.sh`: Builds the PDF guides
+- `scripts/build_combined_html.py`: Prepares combined HTML used for PDF export
+- `pdf/requirements.txt`: Python dependencies for PDF generation
+- `package.json` and `package-lock.json`: Pinned Node dependency for PDF generation
+- `pdf/setup-guide.pdf`: Generated setup guide PDF
+- `pdf/user-guide.pdf`: Generated user guide PDF
+
+## Notes
+
+- `scripts/build_pdf.sh` bootstraps the local Python environment if needed.
+- The PDF build uses the repo’s pinned `pagedjs-cli` dependency for more consistent output.

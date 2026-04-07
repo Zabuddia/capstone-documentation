@@ -35,7 +35,7 @@ Once your model is selected, you are ready to start generating responses.
 
 ---
 
-###Include Files, Links, and More
+### Include Files, Links, and More
 
 If you need the AI to analyze a specific document, image, or website, you can easily attach it to your prompt.
 
@@ -44,6 +44,20 @@ If you need the AI to analyze a specific document, image, or website, you can ea
 3. Select the appropriate option and choose the file or link you want to include.
 
 ![Add Files Menu](images/Add_Files.png)
+
+---
+
+### Connect to MCP Server Tools
+
+To use the custom search tools and retrieve information from the Azure AI Search indexes, you need to enable the MCP server integration.
+
+1. Locate the **Integrations** icon, shown as four small diamonds inside the chat input box, just to the right of the **`+`** button.
+2. Click the icon to open the integrations menu.
+3. Click **Tools** to view the available external tools.
+4. Find **MCP Server** in the list and switch it to the **ON** position.
+5. Once enabled, the LLM can autonomously call these tools to search the documentation while responding to your prompts.
+
+![Connect to MCP Server Tools](images/MCP_connection.png)
 
 ---
 

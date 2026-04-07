@@ -21,6 +21,8 @@ dist/
 # Env/secrets
 .env
 .env.*
+# Node
+node_modules/
 # Editor/IDE
 .vscode/
 .idea/

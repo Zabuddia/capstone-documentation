@@ -16,16 +16,19 @@
         pythonEnv = pkgs.python312.withPackages (ps: with ps; [
           mkdocs
           mkdocs-material
+          beautifulsoup4
         ]);
       in
       {
         devShells.default = pkgs.mkShell {
           packages = [
+            pkgs.chromium
+            pkgs.nodejs
             pythonEnv
           ];
 
           shellHook = ''
-            echo "MkDocs dev shell ready. Run: mkdocs serve"
+            echo "MkDocs/PDF dev shell ready. Run: mkdocs serve or scripts/build_pdf.sh"
           '';
         };
       });
