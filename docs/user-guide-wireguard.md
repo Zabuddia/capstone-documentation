@@ -26,7 +26,7 @@ You will need all three to complete your tunnel configuration.
 
 Download and install WireGuard for Windows from the official installer:
 
-[wireguard.com/install](https://www.wireguard.com/install/)
+[https://www.wireguard.com/install](https://www.wireguard.com/install/)
 
 Run the installer and open the WireGuard app when it finishes.
 

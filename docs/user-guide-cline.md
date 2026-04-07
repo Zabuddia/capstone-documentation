@@ -12,13 +12,11 @@ Complete these steps once before using Cline for the first time.
 
 ### Prerequisites
 
-- WireGuard is connected on your local machine (see the Setup Guide)
-- LiteLLM is running on the VM
-- MCP Server is running on the VM (required for RAG index access)
+- WireGuard is connected on your local machine
 
 ### Step 1: Install Visual Studio Code
 
-1. Go to `https://code.visualstudio.com/`.
+1. Go to [https://code.visualstudio.com/](https://code.visualstudio.com/).
 2. Download and install the version for your operating system.
 3. Launch Visual Studio Code.
 
@@ -131,9 +129,6 @@ In Act mode, Cline executes tasks directly. Each file edit or terminal command i
 
 Use Act mode once you are satisfied with the plan, or for straightforward tasks that do not need a planning step.
 
-!!! note
-    Cline works best with capable reasoning models. The note in the settings panel states: *"Cline uses complex prompts and works best with Claude models. Less capable models may not work as expected."*
-
 ---
 
 ## Auto-Approve
@@ -150,7 +145,7 @@ The **Auto-approve** section at the bottom of the Cline panel controls which act
 | **Use the browser** | Open and interact with web pages |
 | **Use MCP servers** | Call MCP tools (e.g., RAG index search) without asking |
 
-The default configuration enables **Read project files**, **Execute safe commands**, and **Use MCP servers** — a reasonable balance for most users. Enable additional permissions only if the interruptions are slowing you down and you trust Cline's judgment for that action type.
+The default configuration enables **Read project files**, **Execute safe commands**, and **Use MCP servers**. Enable additional permissions only if the interruptions are slowing you down and you trust Cline's judgment for that action type.
 
 !!! warning
     Enabling **Edit project files** or **Execute all commands** means Cline can modify your code and run arbitrary commands without showing you a preview first. Only enable these if you are comfortable with that level of autonomy.
@@ -210,7 +205,7 @@ You do not need to invoke tools manually — Cline decides when to use them base
 
 > "Search the `ipp-documentation` index for information about the API authentication flow."
 
-To see which MCP tools are currently available, click the **≡** icon in the Cline toolbar. Each tool corresponds to one of your configured indexes or other MCP-connected services.
+To see which MCP tools are currently available, click the ![Cline MCP servers icon](images/cline-mcp.png) icon in the Cline toolbar. Each tool corresponds to one of your configured indexes or other MCP-connected services.
 
 ---
 

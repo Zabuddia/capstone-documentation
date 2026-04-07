@@ -8,8 +8,8 @@ The RAG Website is a centralized interface for managing the knowledge bases that
 
 ## Prerequisites
 
-- The RAG website is running and accessible on your network (see the Setup Guide)
 - Documents you want to upload are ready (PDF, plain text, or source code files)
+- WireGuard is connected on your local machine
 
 ---
 
@@ -123,7 +123,7 @@ Click **Update Index & Add Files** to save changes and trigger ingestion for any
 
 Indexes are exposed to the AI assistant as tools via the MCP server. To use an index during a conversation:
 
-1. Ensure the MCP server is running (see the Setup Guide).
+1. Connect your AI assistant (Cline or OpenWebUI) to the MCP server (see the CLine and OpenWebUI user guides).
 2. In your AI assistant (Cline or OpenWebUI), the available indexes will appear as selectable tools.
 3. Ask a question — the AI will automatically query the relevant index and cite the passages it found.
 

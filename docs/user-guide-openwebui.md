@@ -1,12 +1,11 @@
 # Open WebUI User Guide
 
-Welcome to the Open WebUI! This step-by-step guide will walk you through the basics of navigating the interface, selecting models, starting your first chat, and using the built-in workspace tools.
+This step-by-step guide will walk you through the basics of navigating the interface, selecting models, starting your first chat, and using the built-in workspace tools.
 
 ---
 
 ### Access the WebUI
-To get started, open your preferred web browser and navigate to the following address:
-* **URL:** `http://10.55.55.1:3000`
+To get started, open your preferred web browser and navigate to the following address: `http://10.55.55.1:3000`
 
 ![Landing Page](images/Landing_Page.png)
 
