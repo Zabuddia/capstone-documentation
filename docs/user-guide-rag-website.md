@@ -40,6 +40,8 @@ A chunk size of **512–1024** is a reasonable starting point for most documenta
 
 The Index Manager is the landing page at `http://10.55.55.1:7000`. It lists every index currently available.
 
+![Index Manager Dashboard](images/Rag_Landing.png)
+
 | Column | Description |
 |---|---|
 | **Index Name** | Unique identifier for the index in Azure AI Search. Click the name to open its edit page. |
@@ -51,6 +53,8 @@ The Index Manager is the landing page at `http://10.55.55.1:7000`. It lists ever
 
 Use the **Search** bar at the top right to filter indexes by name.
 
+![Search Indexes Bar](images/Rag_search_bar.png)
+
 !!! warning
     There is no way to view the individual files that have been added to an index — only the total document count is shown. Keep a separate record of what you have uploaded to each index if you need to track this.
 
@@ -59,6 +63,8 @@ Use the **Search** bar at the top right to filter indexes by name.
 ## Creating a New Index
 
 Click **+ Create Index** on the dashboard to open the creation form.
+
+![Create Index Button](images/Rag_New_Index.png)
 
 ### Step 1: Configure the Index
 
@@ -87,9 +93,13 @@ Click **Choose Files** and select one or more files from your computer. Supporte
 !!! warning
     The index does not prevent duplicate uploads. If you upload the same file twice, its content will be added to the index twice, which can cause the AI to return redundant results. Keep track of what you have already added.
 
+![Upload Files](images/Rag_Files.png)
+
 **Upload URL**
 
 Paste a URL into the **Upload URL** field and click **Create Index**. The site will scrape the page, find all links on that domain, and show you a **Select Links to Scrape** page. Check the boxes next to the pages you want to add to the index, then click **Add Selected to Index**.
+
+![Upload URL](images/Rag_Upload_URL.png)
 
 ### Step 3: Submit
 
@@ -100,6 +110,8 @@ Click **Create Index**. The system will process and embed your documents into Az
 ## Editing an Existing Index
 
 Click **Edit** next to any index on the dashboard to open the Edit Index page.
+
+![Edit Index Button](images/Rag_Edit.png)
 
 ### Read-Only Information
 
@@ -119,12 +131,23 @@ Click **Update Index & Add Files** to save changes and trigger ingestion for any
 
 ---
 
+## Deleting an Index
+
+Click **Delete** next to any index on the dashboard to permanently remove the index and all of its data from Azure AI Search.
+
+![Delete Index Button](images/Rag_Delete.png)
+
+!!! warning
+    Deleting an index cannot be undone. Make sure the index is no longer needed before removing it.
+
+---
+
 ## Using an Index with the AI
 
 Indexes are exposed to the AI assistant as tools via the MCP server. To use an index during a conversation:
 
 1. Connect your AI assistant (Cline or OpenWebUI) to the MCP server (see the CLine and OpenWebUI user guides).
-2. In your AI assistant (Cline or OpenWebUI), the available indexes will appear as selectable tools.
+2. In your AI assistant (Cline or OpenWebUI), the available indexes will be accessible tools for the LLM.
 3. Ask a question — the AI will automatically query the relevant index and cite the passages it found.
 
 !!! note
