@@ -56,7 +56,7 @@ alias exposed by LiteLLM, such as `gpt-4o`.
     - **Model ID:** the LiteLLM model alias, such as `gpt-4o`
 3. Click **Continue**.
 
-![Cline API](images/Cline API Config.png)
+![Cline API](images/Cline%20API%20Config.png)
 
 **If Cline is already installed**, open the settings directly:
 
@@ -75,7 +75,7 @@ alias exposed by LiteLLM, such as `gpt-4o`.
     - **Transport Type:** `Streamable HTTP`
 4. Save the server entry.
 
-![Cline MCP Config](images/Cline MCP Config.png)
+![Cline MCP Config](images/Cline%20MCP%20Config.png)
 
 ### Step 5: Confirm the connections
 
