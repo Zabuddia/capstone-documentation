@@ -36,6 +36,9 @@ Complete these steps once before using Cline for the first time.
     - **Base URL:** `http://10.55.55.1:4000`
     - **OpenAI Compatible API Key:** `none`
     - **Model ID:** `gpt-4o`
+   
+![Cline API Config](images/Cline%20API%20Config.png)
+
 3. Click **Continue**.
 
 **If Cline is already installed**, open Settings directly:
@@ -53,6 +56,9 @@ Complete these steps once before using Cline for the first time.
     - **Server Name:** `Azure MCP` (or any label you prefer)
     - **Server URL:** `http://10.55.55.1:8000/mcp`
     - **Transport Type:** `Streamable HTTP`
+  
+![Cline MCP Config](images/Cline%20MCP%20Config.png)
+
 4. Save the entry.
 
 ### Step 5: Verify the Connections
@@ -75,6 +81,8 @@ The bottom bar of the panel always shows the active model name. The **Plan** and
 
 The four icons to the left of the chat input provide quick access to common actions:
 
+![Cline Toolbar](images/Cline%20Toolbar%20Snip.png)
+
 | Button | Action |
 |---|---|
 | **@** | **Add Context** — attach files, folders, URLs, or other references to your message |
@@ -91,6 +99,8 @@ Cline works best when it knows what you are working on. You can add context in s
 ### @ Context Picker
 
 Type `@` in the chat input or click the **@** button to open the context picker menu. The following options are available:
+
+![Cline @ list](images/Cline%20at%20list.png)
 
 - **Paste URL to fetch contents** — fetches and attaches the contents of a web page
 - **Problems** — attaches the current errors and warnings from the VS Code Problems panel
@@ -110,6 +120,8 @@ Drag a file from the VS Code Explorer directly into the Cline chat input to atta
 ---
 
 ## Plan and Act Modes
+
+![Cline Plan/Act Config](images/Cline%20Plan%20and%20Act%20snip.png)
 
 Cline operates in two modes, toggled with the **Plan** and **Act** buttons at the bottom of the panel.
 
@@ -134,6 +146,8 @@ Use Act mode once you are satisfied with the plan, or for straightforward tasks 
 ## Auto-Approve
 
 The **Auto-approve** section at the bottom of the Cline panel controls which actions Cline can take without prompting you each time. This speeds up your workflow for actions you trust.
+
+![Cline Auto Approve Config](images/Cline%20Auto%20Approve.png)
 
 | Permission | What it allows |
 |---|---|
