@@ -190,6 +190,8 @@ Click **+** next to the appropriate section and point it at a rule file (a plain
 
 Workflows define a reusable series of steps for repetitive tasks. Once defined, you invoke a workflow by typing `/workflow-name` in the chat.
 
+![Cline Workflows](images/Cline%20Workflows.png)
+
 - **Global Workflows** are available in any workspace.
 - **Workspace Workflows** are specific to the current project.
 
