@@ -174,6 +174,8 @@ Click the **Manage Cline Rules & Workflows** icon (bottom left of the chat input
 
 Rules provide Cline with persistent system-level guidance that applies to every conversation — without you having to repeat yourself each time. Think of them as standing instructions.
 
+![Cline Rules](images/Cline%20Rules.png)
+
 - **Global Rules** apply across all workspaces on your machine.
 - **Workspace Rules** apply only to the current VS Code project.
 
@@ -199,12 +201,16 @@ Example workflows:
 
 Hooks let you run custom scripts at specific points in Cline's execution lifecycle — for example, automatically running a formatter after every file edit. Hooks are enabled or disabled by setting file permissions (`chmod +x` to enable, `chmod -x` to disable).
 
+![Cline Hooks](images/Cline%20Hooks.png)
+
 - **Global Hooks** apply across all workspaces.
 - **Workspace Hooks** apply only to the current project (stored in `.clinerules/hooks/`).
 
 ### Skills
 
 Skills are reusable instruction sets that Cline loads on demand. When a task matches a skill's description, Cline automatically invokes the `use_skill` tool to load the full instructions for that skill.
+
+![Cline Skills](images/Cline%20Skills.png)
 
 - **Global Skills** are available in any workspace.
 - **Workspace Skills** are specific to the current project.
