@@ -83,7 +83,43 @@ litellm_settings:
 !!! note "Adding more deployments"
     If traffic later needs to be spread across multiple Azure deployments,
     additional entries can be added to `config.yaml` with the same
-    `model_name`.
+    `model_name`. LiteLLM can then route requests across deployments that
+    expose the same underlying model.
+
+!!! example "Increase effective TPM with two equivalent deployments"
+    If two Azure deployments serve the same base model, both can be listed
+    under the same LiteLLM alias. This is useful when each deployment has its
+    own Tokens Per Minute quota and you want LiteLLM to spread requests across
+    them.
+
+    In this example, both Azure deployments map to the same LiteLLM model name
+    `gpt-5.1`, so clients still call one model while LiteLLM can use either
+    backend deployment:
+
+        model_list:
+          - model_name: gpt-5.1
+            litellm_params:
+              model: azure/gpt-5.1-virginia
+              api_base: os.environ/AZURE_API_BASE_VIRGINIA
+              api_key: os.environ/AZURE_LLM_API_KEY_VIRGINIA
+              api_version: 2025-01-01-preview
+              base_model: gpt-5.1
+
+          - model_name: gpt-5.1
+            litellm_params:
+              model: azure/gpt-5.1-arizona
+              api_base: os.environ/AZURE_API_BASE_ARIZONA
+              api_key: os.environ/AZURE_LLM_API_KEY_ARIZONA
+              api_version: 2025-01-01-preview
+              base_model: gpt-5.1
+
+        litellm_settings:
+          drop_params: true
+          rate_limiter: local
+
+    Each Azure deployment keeps its own quota, so using multiple equivalent
+    deployments can increase total available throughput while preserving a
+    single model name for clients.
 
 ### Step 3: Run LiteLLM in Docker
 
@@ -108,6 +144,19 @@ docker run -d \
   docker.litellm.ai/berriai/litellm:main-stable \
   --config /app/config.yaml
 ```
+
+If `config.yaml` references additional environment variables, add more `-e`
+flags to the same `docker run` command. For example, the two-deployment
+configuration above would also need:
+
+```bash
+-e AZURE_API_BASE_VIRGINIA="https://<virginia-endpoint>.openai.azure.us/" \
+-e AZURE_LLM_API_KEY_VIRGINIA="<VIRGINIA_API_KEY>" \
+-e AZURE_API_BASE_ARIZONA="https://<arizona-endpoint>.openai.azure.us/" \
+-e AZURE_LLM_API_KEY_ARIZONA="<ARIZONA_API_KEY>" \
+```
+
+Those variable names must match the names used in `config.yaml`.
 
 !!! note "No API key required"
     This example does not set a LiteLLM master key. Clients on WireGuard can
