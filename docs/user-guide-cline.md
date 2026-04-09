@@ -36,8 +36,8 @@ Complete these steps once before using Cline for the first time.
     - **Base URL:** `http://10.55.55.1:4000`
     - **OpenAI Compatible API Key:** `none`
     - **Model ID:** `gpt-4o`
-   
-![Cline API Config](images/Cline%20API%20Config.png)
+
+    ![Cline API Config](images/Cline%20API%20Config.png)
 
 3. Click **Continue**.
 
@@ -56,8 +56,8 @@ Complete these steps once before using Cline for the first time.
     - **Server Name:** `Azure MCP` (or any label you prefer)
     - **Server URL:** `http://10.55.55.1:8000/mcp`
     - **Transport Type:** `Streamable HTTP`
-  
-![Cline MCP Config](images/Cline%20MCP%20Config.png)
+
+    ![Cline MCP Config](images/Cline%20MCP%20Config.png)
 
 4. Save the entry.
 
